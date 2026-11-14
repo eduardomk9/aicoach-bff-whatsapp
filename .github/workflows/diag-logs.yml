@@ -1,0 +1,48 @@
+name: diag-logs
+
+# R20 diag: roda quando o repo recebe o arquivo-flag diag-logs.flag (push com o
+# flag). O runner (rede Azure↔Azure saudavel) puxa os logs dos 2 container apps
+# e COMMITA de volta no repo (mais o flag removido) - o log chega na maquina
+# local via git pull, sem depender da rota local->Azure (que esta morrendo).
+
+on:
+  push:
+    branches: [master]
+    paths: ['diag-logs.flag']
+
+permissions:
+  contents: write
+
+concurrency:
+  group: diag-logs
+  cancel-in-progress: true
+
+jobs:
+  puxar-logs:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Puxa logs dos container apps
+        run: |
+          set -o pipefail
+          az containerapp logs show -n aicoach-api -g rg-aicoach --tail 200 > logs-api.txt || echo "FALHA_API" > logs-api.txt
+          az containerapp logs show -n aicoach-bff -g rg-aicoach --tail 200 > logs-bff.txt || echo "FALHA_BFF" > logs-bff.txt
+
+      - name: Comita os logs de volta no repo
+        run: |
+          git config user.email "diag@runner.local"
+          git config user.name "diag-runner"
+          git add logs-api.txt logs-bff.txt
+          git rm --cached diag-logs.flag || true
+          if git diff --cached --quiet; then
+            echo "NADA_A_COMITAR"
+            exit 0
+          fi
+          git commit -m "diag: logs dos container apps (auto via runner)"
+          git push
