@@ -1,202 +1,202 @@
-{"TimeStamp": "2026-11-14T14:00:28.88585", "Log": "Connecting to the container 'aicoach-bff'..."}
-{"TimeStamp": "2026-11-14T14:00:28.96401", "Log": "Successfully Connected to container: 'aicoach-bff' [Revision: 'aicoach-bff--0000005', Replica: 'aicoach-bff--0000005-c46d464d9-vh74j']"}
-{"TimeStamp": "2026-11-14T13:56:10.7682725+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.ClientHandler[100]"}
-{"TimeStamp": "2026-11-14T13:56:10.7682747+00:00", "Log": "F       Sending HTTP request POST http://aicoach-api.internal.yellowpond-bc313828.brazilsouth.azurecontainerapps.io/auth/login"}
-{"TimeStamp": "2026-11-14T13:56:10.7773176+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.ClientHandler[101]"}
-{"TimeStamp": "2026-11-14T13:56:10.7773513+00:00", "Log": "F       Received HTTP response headers after 8.9489ms - 405"}
-{"TimeStamp": "2026-11-14T13:56:10.7773667+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.LogicalHandler[101]"}
-{"TimeStamp": "2026-11-14T13:56:10.7773692+00:00", "Log": "F       End processing HTTP request after 9.0395ms - 405"}
-{"TimeStamp": "2026-11-14T13:56:10.7800026+00:00", "Log": "F fail: AiCoachBff.Api.Services.WebhookService[0]"}
-{"TimeStamp": "2026-11-14T13:56:10.7800296+00:00", "Log": "F       Falha ao processar mensagem demo-701c3287b08f401085a5c1daf706d3d5 de 5541998778427."}
-{"TimeStamp": "2026-11-14T13:56:10.7800405+00:00", "Log": "F       System.Net.Http.HttpRequestException: Response status code does not indicate success: 405 (Method Not Allowed)."}
-{"TimeStamp": "2026-11-14T13:56:10.7800479+00:00", "Log": "F          at System.Net.Http.HttpResponseMessage.EnsureSuccessStatusCode()"}
-{"TimeStamp": "2026-11-14T13:56:10.78005+00:00", "Log": "F          at AiCoachBff.Api.Services.AiCoachClient.GetTokenAsync(CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/AiCoachClient.cs:line 162"}
-{"TimeStamp": "2026-11-14T13:56:10.7800525+00:00", "Log": "F          at AiCoachBff.Api.Services.AiCoachClient.LookupUserAsync(String phone, CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/AiCoachClient.cs:line 54"}
-{"TimeStamp": "2026-11-14T13:56:10.7800547+00:00", "Log": "F          at AiCoachBff.Api.Services.WebhookService.ReplyFromCoachAsync(String waId, String text, String profileName, IOutboundSink sink, CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/WebhookService.cs:line 165"}
-{"TimeStamp": "2026-11-14T13:56:10.7800988+00:00", "Log": "F          at AiCoachBff.Api.Services.WebhookService.HandleCoreAsync(InboundMessage message, String profileName, IOutboundSink sink, CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/WebhookService.cs:line 148"}
-{"TimeStamp": "2026-11-14T13:56:43.705182+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.LogicalHandler[100]"}
-{"TimeStamp": "2026-11-14T13:56:43.7052152+00:00", "Log": "F       Start processing HTTP request POST http://aicoach-api.internal.yellowpond-bc313828.brazilsouth.azurecontainerapps.io/auth/login"}
-{"TimeStamp": "2026-11-14T13:56:43.7052274+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.ClientHandler[100]"}
-{"TimeStamp": "2026-11-14T13:56:43.7052297+00:00", "Log": "F       Sending HTTP request POST http://aicoach-api.internal.yellowpond-bc313828.brazilsouth.azurecontainerapps.io/auth/login"}
-{"TimeStamp": "2026-11-14T13:56:43.7158315+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.ClientHandler[101]"}
-{"TimeStamp": "2026-11-14T13:56:43.7158735+00:00", "Log": "F       Received HTTP response headers after 10.6232ms - 405"}
-{"TimeStamp": "2026-11-14T13:56:43.7158845+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.LogicalHandler[101]"}
-{"TimeStamp": "2026-11-14T13:56:43.7158861+00:00", "Log": "F       End processing HTTP request after 10.7545ms - 405"}
-{"TimeStamp": "2026-11-14T13:56:43.7161989+00:00", "Log": "F warn: AiCoachBff.Api.Services.WebhookService[0]"}
-{"TimeStamp": "2026-11-14T13:56:43.7162146+00:00", "Log": "F       Demo: lookup de bloqueio falhou para 5541998778427 \u2014 seguindo o fluxo normal."}
-{"TimeStamp": "2026-11-14T13:56:43.7162188+00:00", "Log": "F       System.Net.Http.HttpRequestException: Response status code does not indicate success: 405 (Method Not Allowed)."}
-{"TimeStamp": "2026-11-14T13:56:43.7162204+00:00", "Log": "F          at System.Net.Http.HttpResponseMessage.EnsureSuccessStatusCode()"}
-{"TimeStamp": "2026-11-14T13:56:43.7162218+00:00", "Log": "F          at AiCoachBff.Api.Services.AiCoachClient.GetTokenAsync(CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/AiCoachClient.cs:line 162"}
-{"TimeStamp": "2026-11-14T13:56:43.7162231+00:00", "Log": "F          at AiCoachBff.Api.Services.AiCoachClient.LookupUserAsync(String phone, CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/AiCoachClient.cs:line 54"}
-{"TimeStamp": "2026-11-14T13:56:43.7162267+00:00", "Log": "F          at AiCoachBff.Api.Services.WebhookService.BloqueadoForaDaAllowlistAsync(String waId, CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/WebhookService.cs:line 114"}
-{"TimeStamp": "2026-11-14T13:56:43.7166859+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.LogicalHandler[100]"}
-{"TimeStamp": "2026-11-14T13:56:43.7167038+00:00", "Log": "F       Start processing HTTP request POST http://aicoach-api.internal.yellowpond-bc313828.brazilsouth.azurecontainerapps.io/auth/login"}
-{"TimeStamp": "2026-11-14T13:56:43.7167111+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.ClientHandler[100]"}
-{"TimeStamp": "2026-11-14T13:56:43.7167136+00:00", "Log": "F       Sending HTTP request POST http://aicoach-api.internal.yellowpond-bc313828.brazilsouth.azurecontainerapps.io/auth/login"}
-{"TimeStamp": "2026-11-14T13:56:43.7238654+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.ClientHandler[101]"}
-{"TimeStamp": "2026-11-14T13:56:43.7239027+00:00", "Log": "F       Received HTTP response headers after 7.4455ms - 405"}
-{"TimeStamp": "2026-11-14T13:56:43.7239182+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.LogicalHandler[101]"}
-{"TimeStamp": "2026-11-14T13:56:43.7239211+00:00", "Log": "F       End processing HTTP request after 7.5296ms - 405"}
-{"TimeStamp": "2026-11-14T13:56:43.7244282+00:00", "Log": "F fail: AiCoachBff.Api.Services.WebhookService[0]"}
-{"TimeStamp": "2026-11-14T13:56:43.7244362+00:00", "Log": "F       Falha ao processar mensagem demo-f61a2dce8fb74d75a465cd425dc29a01 de 5541998778427."}
-{"TimeStamp": "2026-11-14T13:56:43.7244406+00:00", "Log": "F       System.Net.Http.HttpRequestException: Response status code does not indicate success: 405 (Method Not Allowed)."}
-{"TimeStamp": "2026-11-14T13:56:43.7244424+00:00", "Log": "F          at System.Net.Http.HttpResponseMessage.EnsureSuccessStatusCode()"}
-{"TimeStamp": "2026-11-14T13:56:43.7244437+00:00", "Log": "F          at AiCoachBff.Api.Services.AiCoachClient.GetTokenAsync(CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/AiCoachClient.cs:line 162"}
-{"TimeStamp": "2026-11-14T13:56:43.7244451+00:00", "Log": "F          at AiCoachBff.Api.Services.AiCoachClient.LookupUserAsync(String phone, CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/AiCoachClient.cs:line 54"}
-{"TimeStamp": "2026-11-14T13:56:43.7244483+00:00", "Log": "F          at AiCoachBff.Api.Services.WebhookService.ReplyFromCoachAsync(String waId, String text, String profileName, IOutboundSink sink, CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/WebhookService.cs:line 165"}
-{"TimeStamp": "2026-11-14T13:56:43.7245276+00:00", "Log": "F          at AiCoachBff.Api.Services.WebhookService.HandleCoreAsync(InboundMessage message, String profileName, IOutboundSink sink, CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/WebhookService.cs:line 148"}
-{"TimeStamp": "2026-11-14T13:57:40.8216424+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.LogicalHandler[100]"}
-{"TimeStamp": "2026-11-14T13:57:40.8216786+00:00", "Log": "F       Start processing HTTP request POST http://aicoach-api.internal.yellowpond-bc313828.brazilsouth.azurecontainerapps.io/auth/login"}
-{"TimeStamp": "2026-11-14T13:57:40.8216934+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.ClientHandler[100]"}
-{"TimeStamp": "2026-11-14T13:57:40.8217004+00:00", "Log": "F       Sending HTTP request POST http://aicoach-api.internal.yellowpond-bc313828.brazilsouth.azurecontainerapps.io/auth/login"}
-{"TimeStamp": "2026-11-14T13:57:40.8439841+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.ClientHandler[101]"}
-{"TimeStamp": "2026-11-14T13:57:40.8440189+00:00", "Log": "F       Received HTTP response headers after 22.6774ms - 405"}
-{"TimeStamp": "2026-11-14T13:57:40.8440362+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.LogicalHandler[101]"}
-{"TimeStamp": "2026-11-14T13:57:40.8440394+00:00", "Log": "F       End processing HTTP request after 22.7921ms - 405"}
-{"TimeStamp": "2026-11-14T13:57:40.8446378+00:00", "Log": "F warn: AiCoachBff.Api.Services.WebhookService[0]"}
-{"TimeStamp": "2026-11-14T13:57:40.8446599+00:00", "Log": "F       Demo: lookup de bloqueio falhou para 5541998778427 \u2014 seguindo o fluxo normal."}
-{"TimeStamp": "2026-11-14T13:57:40.8446693+00:00", "Log": "F       System.Net.Http.HttpRequestException: Response status code does not indicate success: 405 (Method Not Allowed)."}
-{"TimeStamp": "2026-11-14T13:57:40.8446775+00:00", "Log": "F          at System.Net.Http.HttpResponseMessage.EnsureSuccessStatusCode()"}
-{"TimeStamp": "2026-11-14T13:57:40.8446798+00:00", "Log": "F          at AiCoachBff.Api.Services.AiCoachClient.GetTokenAsync(CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/AiCoachClient.cs:line 162"}
-{"TimeStamp": "2026-11-14T13:57:40.8446818+00:00", "Log": "F          at AiCoachBff.Api.Services.AiCoachClient.LookupUserAsync(String phone, CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/AiCoachClient.cs:line 54"}
-{"TimeStamp": "2026-11-14T13:57:40.8446838+00:00", "Log": "F          at AiCoachBff.Api.Services.WebhookService.BloqueadoForaDaAllowlistAsync(String waId, CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/WebhookService.cs:line 114"}
-{"TimeStamp": "2026-11-14T13:57:40.8447205+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.LogicalHandler[100]"}
-{"TimeStamp": "2026-11-14T13:57:40.8447239+00:00", "Log": "F       Start processing HTTP request POST http://aicoach-api.internal.yellowpond-bc313828.brazilsouth.azurecontainerapps.io/auth/login"}
-{"TimeStamp": "2026-11-14T13:57:40.8447261+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.ClientHandler[100]"}
-{"TimeStamp": "2026-11-14T13:57:40.844728+00:00", "Log": "F       Sending HTTP request POST http://aicoach-api.internal.yellowpond-bc313828.brazilsouth.azurecontainerapps.io/auth/login"}
-{"TimeStamp": "2026-11-14T13:57:40.8920817+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.ClientHandler[101]"}
-{"TimeStamp": "2026-11-14T13:57:40.8921226+00:00", "Log": "F       Received HTTP response headers after 47.1592ms - 405"}
-{"TimeStamp": "2026-11-14T13:57:40.8921369+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.LogicalHandler[101]"}
-{"TimeStamp": "2026-11-14T13:57:40.8921387+00:00", "Log": "F       End processing HTTP request after 47.2781ms - 405"}
-{"TimeStamp": "2026-11-14T13:57:40.8928251+00:00", "Log": "F fail: AiCoachBff.Api.Services.WebhookService[0]"}
-{"TimeStamp": "2026-11-14T13:57:40.8928414+00:00", "Log": "F       Falha ao processar mensagem demo-11ba39d1c40344beaa9ba4aef87b69ef de 5541998778427."}
-{"TimeStamp": "2026-11-14T13:57:40.892849+00:00", "Log": "F       System.Net.Http.HttpRequestException: Response status code does not indicate success: 405 (Method Not Allowed)."}
-{"TimeStamp": "2026-11-14T13:57:40.8928516+00:00", "Log": "F          at System.Net.Http.HttpResponseMessage.EnsureSuccessStatusCode()"}
-{"TimeStamp": "2026-11-14T13:57:40.8928539+00:00", "Log": "F          at AiCoachBff.Api.Services.AiCoachClient.GetTokenAsync(CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/AiCoachClient.cs:line 162"}
-{"TimeStamp": "2026-11-14T13:57:40.8928606+00:00", "Log": "F          at AiCoachBff.Api.Services.AiCoachClient.LookupUserAsync(String phone, CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/AiCoachClient.cs:line 54"}
-{"TimeStamp": "2026-11-14T13:57:40.8928631+00:00", "Log": "F          at AiCoachBff.Api.Services.WebhookService.ReplyFromCoachAsync(String waId, String text, String profileName, IOutboundSink sink, CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/WebhookService.cs:line 165"}
-{"TimeStamp": "2026-11-14T13:57:40.892937+00:00", "Log": "F          at AiCoachBff.Api.Services.WebhookService.HandleCoreAsync(InboundMessage message, String profileName, IOutboundSink sink, CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/WebhookService.cs:line 148"}
-{"TimeStamp": "2026-11-14T13:58:13.7717898+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.LogicalHandler[100]"}
-{"TimeStamp": "2026-11-14T13:58:13.771826+00:00", "Log": "F       Start processing HTTP request POST http://aicoach-api.internal.yellowpond-bc313828.brazilsouth.azurecontainerapps.io/auth/login"}
-{"TimeStamp": "2026-11-14T13:58:13.7718431+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.ClientHandler[100]"}
-{"TimeStamp": "2026-11-14T13:58:13.7718519+00:00", "Log": "F       Sending HTTP request POST http://aicoach-api.internal.yellowpond-bc313828.brazilsouth.azurecontainerapps.io/auth/login"}
-{"TimeStamp": "2026-11-14T13:58:13.7823104+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.ClientHandler[101]"}
-{"TimeStamp": "2026-11-14T13:58:13.7823371+00:00", "Log": "F       Received HTTP response headers after 10.4104ms - 405"}
-{"TimeStamp": "2026-11-14T13:58:13.7823492+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.LogicalHandler[101]"}
-{"TimeStamp": "2026-11-14T13:58:13.782351+00:00", "Log": "F       End processing HTTP request after 10.5155ms - 405"}
-{"TimeStamp": "2026-11-14T13:58:13.7826816+00:00", "Log": "F warn: AiCoachBff.Api.Services.WebhookService[0]"}
-{"TimeStamp": "2026-11-14T13:58:13.7826906+00:00", "Log": "F       Demo: lookup de bloqueio falhou para 5541998778427 \u2014 seguindo o fluxo normal."}
-{"TimeStamp": "2026-11-14T13:58:13.7826954+00:00", "Log": "F       System.Net.Http.HttpRequestException: Response status code does not indicate success: 405 (Method Not Allowed)."}
-{"TimeStamp": "2026-11-14T13:58:13.7826977+00:00", "Log": "F          at System.Net.Http.HttpResponseMessage.EnsureSuccessStatusCode()"}
-{"TimeStamp": "2026-11-14T13:58:13.7827041+00:00", "Log": "F          at AiCoachBff.Api.Services.AiCoachClient.GetTokenAsync(CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/AiCoachClient.cs:line 162"}
-{"TimeStamp": "2026-11-14T13:58:13.7827062+00:00", "Log": "F          at AiCoachBff.Api.Services.AiCoachClient.LookupUserAsync(String phone, CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/AiCoachClient.cs:line 54"}
-{"TimeStamp": "2026-11-14T13:58:13.7827083+00:00", "Log": "F          at AiCoachBff.Api.Services.WebhookService.BloqueadoForaDaAllowlistAsync(String waId, CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/WebhookService.cs:line 114"}
-{"TimeStamp": "2026-11-14T13:58:13.7827675+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.LogicalHandler[100]"}
-{"TimeStamp": "2026-11-14T13:58:13.7827717+00:00", "Log": "F       Start processing HTTP request POST http://aicoach-api.internal.yellowpond-bc313828.brazilsouth.azurecontainerapps.io/auth/login"}
-{"TimeStamp": "2026-11-14T13:58:13.7827746+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.ClientHandler[100]"}
-{"TimeStamp": "2026-11-14T13:58:13.7827766+00:00", "Log": "F       Sending HTTP request POST http://aicoach-api.internal.yellowpond-bc313828.brazilsouth.azurecontainerapps.io/auth/login"}
-{"TimeStamp": "2026-11-14T13:58:13.7909913+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.ClientHandler[101]"}
-{"TimeStamp": "2026-11-14T13:58:13.7910104+00:00", "Log": "F       Received HTTP response headers after 8.1627ms - 405"}
-{"TimeStamp": "2026-11-14T13:58:13.7910203+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.LogicalHandler[101]"}
-{"TimeStamp": "2026-11-14T13:58:13.791025+00:00", "Log": "F       End processing HTTP request after 8.2296ms - 405"}
-{"TimeStamp": "2026-11-14T13:58:13.7914093+00:00", "Log": "F fail: AiCoachBff.Api.Services.WebhookService[0]"}
-{"TimeStamp": "2026-11-14T13:58:13.791419+00:00", "Log": "F       Falha ao processar mensagem demo-307f17792ae54be4bcfdac666da2d5aa de 5541998778427."}
-{"TimeStamp": "2026-11-14T13:58:13.7914237+00:00", "Log": "F       System.Net.Http.HttpRequestException: Response status code does not indicate success: 405 (Method Not Allowed)."}
-{"TimeStamp": "2026-11-14T13:58:13.7914291+00:00", "Log": "F          at System.Net.Http.HttpResponseMessage.EnsureSuccessStatusCode()"}
-{"TimeStamp": "2026-11-14T13:58:13.7914323+00:00", "Log": "F          at AiCoachBff.Api.Services.AiCoachClient.GetTokenAsync(CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/AiCoachClient.cs:line 162"}
-{"TimeStamp": "2026-11-14T13:58:13.7914336+00:00", "Log": "F          at AiCoachBff.Api.Services.AiCoachClient.LookupUserAsync(String phone, CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/AiCoachClient.cs:line 54"}
-{"TimeStamp": "2026-11-14T13:58:13.7914352+00:00", "Log": "F          at AiCoachBff.Api.Services.WebhookService.ReplyFromCoachAsync(String waId, String text, String profileName, IOutboundSink sink, CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/WebhookService.cs:line 165"}
-{"TimeStamp": "2026-11-14T13:58:13.7914896+00:00", "Log": "F          at AiCoachBff.Api.Services.WebhookService.HandleCoreAsync(InboundMessage message, String profileName, IOutboundSink sink, CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/WebhookService.cs:line 148"}
-{"TimeStamp": "2026-11-14T13:58:45.4875614+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.LogicalHandler[100]"}
-{"TimeStamp": "2026-11-14T13:58:45.4875985+00:00", "Log": "F       Start processing HTTP request POST http://aicoach-api.internal.yellowpond-bc313828.brazilsouth.azurecontainerapps.io/auth/login"}
-{"TimeStamp": "2026-11-14T13:58:45.4876118+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.ClientHandler[100]"}
-{"TimeStamp": "2026-11-14T13:58:45.487614+00:00", "Log": "F       Sending HTTP request POST http://aicoach-api.internal.yellowpond-bc313828.brazilsouth.azurecontainerapps.io/auth/login"}
-{"TimeStamp": "2026-11-14T13:58:45.4969396+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.ClientHandler[101]"}
-{"TimeStamp": "2026-11-14T13:58:45.4969715+00:00", "Log": "F       Received HTTP response headers after 9.3798ms - 405"}
-{"TimeStamp": "2026-11-14T13:58:45.4969842+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.LogicalHandler[101]"}
-{"TimeStamp": "2026-11-14T13:58:45.496986+00:00", "Log": "F       End processing HTTP request after 9.4546ms - 405"}
-{"TimeStamp": "2026-11-14T13:58:45.4974417+00:00", "Log": "F warn: AiCoachBff.Api.Services.WebhookService[0]"}
-{"TimeStamp": "2026-11-14T13:58:45.4974635+00:00", "Log": "F       Demo: lookup de bloqueio falhou para 5541998778427 \u2014 seguindo o fluxo normal."}
-{"TimeStamp": "2026-11-14T13:58:45.4974739+00:00", "Log": "F       System.Net.Http.HttpRequestException: Response status code does not indicate success: 405 (Method Not Allowed)."}
-{"TimeStamp": "2026-11-14T13:58:45.4974773+00:00", "Log": "F          at System.Net.Http.HttpResponseMessage.EnsureSuccessStatusCode()"}
-{"TimeStamp": "2026-11-14T13:58:45.4974796+00:00", "Log": "F          at AiCoachBff.Api.Services.AiCoachClient.GetTokenAsync(CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/AiCoachClient.cs:line 162"}
-{"TimeStamp": "2026-11-14T13:58:45.4974867+00:00", "Log": "F          at AiCoachBff.Api.Services.AiCoachClient.LookupUserAsync(String phone, CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/AiCoachClient.cs:line 54"}
-{"TimeStamp": "2026-11-14T13:58:45.4974889+00:00", "Log": "F          at AiCoachBff.Api.Services.WebhookService.BloqueadoForaDaAllowlistAsync(String waId, CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/WebhookService.cs:line 114"}
-{"TimeStamp": "2026-11-14T13:58:45.4975266+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.LogicalHandler[100]"}
-{"TimeStamp": "2026-11-14T13:58:45.4975301+00:00", "Log": "F       Start processing HTTP request POST http://aicoach-api.internal.yellowpond-bc313828.brazilsouth.azurecontainerapps.io/auth/login"}
-{"TimeStamp": "2026-11-14T13:58:45.4975325+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.ClientHandler[100]"}
-{"TimeStamp": "2026-11-14T13:58:45.4975345+00:00", "Log": "F       Sending HTTP request POST http://aicoach-api.internal.yellowpond-bc313828.brazilsouth.azurecontainerapps.io/auth/login"}
-{"TimeStamp": "2026-11-14T13:58:45.5081839+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.ClientHandler[101]"}
-{"TimeStamp": "2026-11-14T13:58:45.5082252+00:00", "Log": "F       Received HTTP response headers after 10.5445ms - 405"}
-{"TimeStamp": "2026-11-14T13:58:45.5082365+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.LogicalHandler[101]"}
-{"TimeStamp": "2026-11-14T13:58:45.5082382+00:00", "Log": "F       End processing HTTP request after 10.6168ms - 405"}
-{"TimeStamp": "2026-11-14T13:58:45.5088709+00:00", "Log": "F fail: AiCoachBff.Api.Services.WebhookService[0]"}
-{"TimeStamp": "2026-11-14T13:58:45.5088871+00:00", "Log": "F       Falha ao processar mensagem demo-9c4de760a1e84b4b8e70d92aad8d6a5c de 5541998778427."}
-{"TimeStamp": "2026-11-14T13:58:45.5088952+00:00", "Log": "F       System.Net.Http.HttpRequestException: Response status code does not indicate success: 405 (Method Not Allowed)."}
-{"TimeStamp": "2026-11-14T13:58:45.508899+00:00", "Log": "F          at System.Net.Http.HttpResponseMessage.EnsureSuccessStatusCode()"}
-{"TimeStamp": "2026-11-14T13:58:45.5089009+00:00", "Log": "F          at AiCoachBff.Api.Services.AiCoachClient.GetTokenAsync(CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/AiCoachClient.cs:line 162"}
-{"TimeStamp": "2026-11-14T13:58:45.5089046+00:00", "Log": "F          at AiCoachBff.Api.Services.AiCoachClient.LookupUserAsync(String phone, CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/AiCoachClient.cs:line 54"}
-{"TimeStamp": "2026-11-14T13:58:45.5089059+00:00", "Log": "F          at AiCoachBff.Api.Services.WebhookService.ReplyFromCoachAsync(String waId, String text, String profileName, IOutboundSink sink, CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/WebhookService.cs:line 165"}
-{"TimeStamp": "2026-11-14T13:58:45.5089608+00:00", "Log": "F          at AiCoachBff.Api.Services.WebhookService.HandleCoreAsync(InboundMessage message, String profileName, IOutboundSink sink, CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/WebhookService.cs:line 148"}
-{"TimeStamp": "2026-11-14T13:59:10.9361394+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.LogicalHandler[100]"}
-{"TimeStamp": "2026-11-14T13:59:10.9361763+00:00", "Log": "F       Start processing HTTP request POST http://aicoach-api.internal.yellowpond-bc313828.brazilsouth.azurecontainerapps.io/auth/login"}
-{"TimeStamp": "2026-11-14T13:59:10.9361919+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.ClientHandler[100]"}
-{"TimeStamp": "2026-11-14T13:59:10.9361944+00:00", "Log": "F       Sending HTTP request POST http://aicoach-api.internal.yellowpond-bc313828.brazilsouth.azurecontainerapps.io/auth/login"}
-{"TimeStamp": "2026-11-14T13:59:10.9475883+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.ClientHandler[101]"}
-{"TimeStamp": "2026-11-14T13:59:10.9476199+00:00", "Log": "F       Received HTTP response headers after 11.2094ms - 405"}
-{"TimeStamp": "2026-11-14T13:59:10.9476326+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.LogicalHandler[101]"}
-{"TimeStamp": "2026-11-14T13:59:10.9476345+00:00", "Log": "F       End processing HTTP request after 11.3032ms - 405"}
-{"TimeStamp": "2026-11-14T13:59:10.9477213+00:00", "Log": "F warn: AiCoachBff.Api.Services.WebhookService[0]"}
-{"TimeStamp": "2026-11-14T13:59:10.9477272+00:00", "Log": "F       Demo: lookup de bloqueio falhou para 5541998778427 \u2014 seguindo o fluxo normal."}
-{"TimeStamp": "2026-11-14T13:59:10.9477312+00:00", "Log": "F       System.Net.Http.HttpRequestException: Response status code does not indicate success: 405 (Method Not Allowed)."}
-{"TimeStamp": "2026-11-14T13:59:10.9477337+00:00", "Log": "F          at System.Net.Http.HttpResponseMessage.EnsureSuccessStatusCode()"}
-{"TimeStamp": "2026-11-14T13:59:10.9477408+00:00", "Log": "F          at AiCoachBff.Api.Services.AiCoachClient.GetTokenAsync(CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/AiCoachClient.cs:line 162"}
-{"TimeStamp": "2026-11-14T13:59:10.9477432+00:00", "Log": "F          at AiCoachBff.Api.Services.AiCoachClient.LookupUserAsync(String phone, CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/AiCoachClient.cs:line 54"}
-{"TimeStamp": "2026-11-14T13:59:10.9477453+00:00", "Log": "F          at AiCoachBff.Api.Services.WebhookService.BloqueadoForaDaAllowlistAsync(String waId, CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/WebhookService.cs:line 114"}
-{"TimeStamp": "2026-11-14T13:59:10.9479536+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.LogicalHandler[100]"}
-{"TimeStamp": "2026-11-14T13:59:10.9479657+00:00", "Log": "F       Start processing HTTP request POST http://aicoach-api.internal.yellowpond-bc313828.brazilsouth.azurecontainerapps.io/auth/login"}
-{"TimeStamp": "2026-11-14T13:59:10.947972+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.ClientHandler[100]"}
-{"TimeStamp": "2026-11-14T13:59:10.9479746+00:00", "Log": "F       Sending HTTP request POST http://aicoach-api.internal.yellowpond-bc313828.brazilsouth.azurecontainerapps.io/auth/login"}
-{"TimeStamp": "2026-11-14T13:59:10.956284+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.ClientHandler[101]"}
-{"TimeStamp": "2026-11-14T13:59:10.9563193+00:00", "Log": "F       Received HTTP response headers after 8.2883ms - 405"}
-{"TimeStamp": "2026-11-14T13:59:10.956336+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.LogicalHandler[101]"}
-{"TimeStamp": "2026-11-14T13:59:10.9563383+00:00", "Log": "F       End processing HTTP request after 8.3513ms - 405"}
-{"TimeStamp": "2026-11-14T13:59:10.9569066+00:00", "Log": "F fail: AiCoachBff.Api.Services.WebhookService[0]"}
-{"TimeStamp": "2026-11-14T13:59:10.9569253+00:00", "Log": "F       Falha ao processar mensagem demo-9f52c27f332b451f860c755709a54aec de 5541998778427."}
-{"TimeStamp": "2026-11-14T13:59:10.9569336+00:00", "Log": "F       System.Net.Http.HttpRequestException: Response status code does not indicate success: 405 (Method Not Allowed)."}
-{"TimeStamp": "2026-11-14T13:59:10.9569367+00:00", "Log": "F          at System.Net.Http.HttpResponseMessage.EnsureSuccessStatusCode()"}
-{"TimeStamp": "2026-11-14T13:59:10.9569387+00:00", "Log": "F          at AiCoachBff.Api.Services.AiCoachClient.GetTokenAsync(CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/AiCoachClient.cs:line 162"}
-{"TimeStamp": "2026-11-14T13:59:10.9569465+00:00", "Log": "F          at AiCoachBff.Api.Services.AiCoachClient.LookupUserAsync(String phone, CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/AiCoachClient.cs:line 54"}
-{"TimeStamp": "2026-11-14T13:59:10.956949+00:00", "Log": "F          at AiCoachBff.Api.Services.WebhookService.ReplyFromCoachAsync(String waId, String text, String profileName, IOutboundSink sink, CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/WebhookService.cs:line 165"}
-{"TimeStamp": "2026-11-14T13:59:10.9570359+00:00", "Log": "F          at AiCoachBff.Api.Services.WebhookService.HandleCoreAsync(InboundMessage message, String profileName, IOutboundSink sink, CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/WebhookService.cs:line 148"}
-{"TimeStamp": "2026-11-14T13:59:43.8391768+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.LogicalHandler[100]"}
-{"TimeStamp": "2026-11-14T13:59:43.8392283+00:00", "Log": "F       Start processing HTTP request POST http://aicoach-api.internal.yellowpond-bc313828.brazilsouth.azurecontainerapps.io/auth/login"}
-{"TimeStamp": "2026-11-14T13:59:43.8392455+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.ClientHandler[100]"}
-{"TimeStamp": "2026-11-14T13:59:43.8392485+00:00", "Log": "F       Sending HTTP request POST http://aicoach-api.internal.yellowpond-bc313828.brazilsouth.azurecontainerapps.io/auth/login"}
-{"TimeStamp": "2026-11-14T13:59:44.1571107+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.ClientHandler[101]"}
-{"TimeStamp": "2026-11-14T13:59:44.157141+00:00", "Log": "F       Received HTTP response headers after 317.8771ms - 405"}
-{"TimeStamp": "2026-11-14T13:59:44.1571529+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.LogicalHandler[101]"}
-{"TimeStamp": "2026-11-14T13:59:44.1571547+00:00", "Log": "F       End processing HTTP request after 317.9747ms - 405"}
-{"TimeStamp": "2026-11-14T13:59:44.1574976+00:00", "Log": "F warn: AiCoachBff.Api.Services.WebhookService[0]"}
-{"TimeStamp": "2026-11-14T13:59:44.157511+00:00", "Log": "F       Demo: lookup de bloqueio falhou para 5541998778427 \u2014 seguindo o fluxo normal."}
-{"TimeStamp": "2026-11-14T13:59:44.1575173+00:00", "Log": "F       System.Net.Http.HttpRequestException: Response status code does not indicate success: 405 (Method Not Allowed)."}
-{"TimeStamp": "2026-11-14T13:59:44.1575204+00:00", "Log": "F          at System.Net.Http.HttpResponseMessage.EnsureSuccessStatusCode()"}
-{"TimeStamp": "2026-11-14T13:59:44.1575226+00:00", "Log": "F          at AiCoachBff.Api.Services.AiCoachClient.GetTokenAsync(CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/AiCoachClient.cs:line 162"}
-{"TimeStamp": "2026-11-14T13:59:44.1575308+00:00", "Log": "F          at AiCoachBff.Api.Services.AiCoachClient.LookupUserAsync(String phone, CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/AiCoachClient.cs:line 54"}
-{"TimeStamp": "2026-11-14T13:59:44.1575333+00:00", "Log": "F          at AiCoachBff.Api.Services.WebhookService.BloqueadoForaDaAllowlistAsync(String waId, CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/WebhookService.cs:line 114"}
-{"TimeStamp": "2026-11-14T13:59:44.1575845+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.LogicalHandler[100]"}
-{"TimeStamp": "2026-11-14T13:59:44.1575886+00:00", "Log": "F       Start processing HTTP request POST http://aicoach-api.internal.yellowpond-bc313828.brazilsouth.azurecontainerapps.io/auth/login"}
-{"TimeStamp": "2026-11-14T13:59:44.1575912+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.ClientHandler[100]"}
-{"TimeStamp": "2026-11-14T13:59:44.1575931+00:00", "Log": "F       Sending HTTP request POST http://aicoach-api.internal.yellowpond-bc313828.brazilsouth.azurecontainerapps.io/auth/login"}
-{"TimeStamp": "2026-11-14T13:59:44.1664778+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.ClientHandler[101]"}
-{"TimeStamp": "2026-11-14T13:59:44.1665145+00:00", "Log": "F       Received HTTP response headers after 8.3632ms - 405"}
-{"TimeStamp": "2026-11-14T13:59:44.1665296+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.LogicalHandler[101]"}
-{"TimeStamp": "2026-11-14T13:59:44.1665313+00:00", "Log": "F       End processing HTTP request after 8.4457ms - 405"}
-{"TimeStamp": "2026-11-14T13:59:44.1665912+00:00", "Log": "F fail: AiCoachBff.Api.Services.WebhookService[0]"}
-{"TimeStamp": "2026-11-14T13:59:44.1665955+00:00", "Log": "F       Falha ao processar mensagem demo-50179a78ef1b414cb6423173dc0e7f2d de 5541998778427."}
-{"TimeStamp": "2026-11-14T13:59:44.1666039+00:00", "Log": "F       System.Net.Http.HttpRequestException: Response status code does not indicate success: 405 (Method Not Allowed)."}
-{"TimeStamp": "2026-11-14T13:59:44.166606+00:00", "Log": "F          at System.Net.Http.HttpResponseMessage.EnsureSuccessStatusCode()"}
-{"TimeStamp": "2026-11-14T13:59:44.166608+00:00", "Log": "F          at AiCoachBff.Api.Services.AiCoachClient.GetTokenAsync(CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/AiCoachClient.cs:line 162"}
-{"TimeStamp": "2026-11-14T13:59:44.16661+00:00", "Log": "F          at AiCoachBff.Api.Services.AiCoachClient.LookupUserAsync(String phone, CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/AiCoachClient.cs:line 54"}
-{"TimeStamp": "2026-11-14T13:59:44.1666127+00:00", "Log": "F          at AiCoachBff.Api.Services.WebhookService.ReplyFromCoachAsync(String waId, String text, String profileName, IOutboundSink sink, CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/WebhookService.cs:line 165"}
-{"TimeStamp": "2026-11-14T13:59:44.1666382+00:00", "Log": "F          at AiCoachBff.Api.Services.WebhookService.HandleCoreAsync(InboundMessage message, String profileName, IOutboundSink sink, CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/WebhookService.cs:line 148"}
+{"TimeStamp": "2026-11-14T14:16:46.32449", "Log": "Connecting to the container 'aicoach-bff'..."}
+{"TimeStamp": "2026-11-14T14:16:46.48127", "Log": "Successfully Connected to container: 'aicoach-bff' [Revision: 'aicoach-bff--0000006', Replica: 'aicoach-bff--0000006-5d8fd99b79-ltt8k']"}
+{"TimeStamp": "2026-11-14T14:11:45.5155228+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.ClientHandler[100]"}
+{"TimeStamp": "2026-11-14T14:11:45.5155248+00:00", "Log": "F       Sending HTTP request POST http://aicoach-api.internal.yellowpond-bc313828.brazilsouth.azurecontainerapps.io/auth/login"}
+{"TimeStamp": "2026-11-14T14:11:45.5232719+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.ClientHandler[101]"}
+{"TimeStamp": "2026-11-14T14:11:45.52329+00:00", "Log": "F       Received HTTP response headers after 7.6675ms - 405"}
+{"TimeStamp": "2026-11-14T14:11:45.5232988+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.LogicalHandler[101]"}
+{"TimeStamp": "2026-11-14T14:11:45.5233017+00:00", "Log": "F       End processing HTTP request after 7.814ms - 405"}
+{"TimeStamp": "2026-11-14T14:11:45.5240028+00:00", "Log": "F fail: AiCoachBff.Api.Services.WebhookService[0]"}
+{"TimeStamp": "2026-11-14T14:11:45.5240182+00:00", "Log": "F       Falha ao processar mensagem demo-197b68eb24e14f8b922932799a0c60dc de 5541998778427."}
+{"TimeStamp": "2026-11-14T14:11:45.5240253+00:00", "Log": "F       System.Net.Http.HttpRequestException: Response status code does not indicate success: 405 (Method Not Allowed)."}
+{"TimeStamp": "2026-11-14T14:11:45.5240312+00:00", "Log": "F          at System.Net.Http.HttpResponseMessage.EnsureSuccessStatusCode()"}
+{"TimeStamp": "2026-11-14T14:11:45.5240331+00:00", "Log": "F          at AiCoachBff.Api.Services.AiCoachClient.GetTokenAsync(CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/AiCoachClient.cs:line 162"}
+{"TimeStamp": "2026-11-14T14:11:45.524035+00:00", "Log": "F          at AiCoachBff.Api.Services.AiCoachClient.LookupUserAsync(String phone, CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/AiCoachClient.cs:line 54"}
+{"TimeStamp": "2026-11-14T14:11:45.524037+00:00", "Log": "F          at AiCoachBff.Api.Services.WebhookService.ReplyFromCoachAsync(String waId, String text, String profileName, IOutboundSink sink, CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/WebhookService.cs:line 170"}
+{"TimeStamp": "2026-11-14T14:11:45.5240835+00:00", "Log": "F          at AiCoachBff.Api.Services.WebhookService.HandleCoreAsync(InboundMessage message, String profileName, IOutboundSink sink, CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/WebhookService.cs:line 148"}
+{"TimeStamp": "2026-11-14T14:12:41.9745153+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.LogicalHandler[100]"}
+{"TimeStamp": "2026-11-14T14:12:41.9745754+00:00", "Log": "F       Start processing HTTP request POST http://aicoach-api.internal.yellowpond-bc313828.brazilsouth.azurecontainerapps.io/auth/login"}
+{"TimeStamp": "2026-11-14T14:12:41.974588+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.ClientHandler[100]"}
+{"TimeStamp": "2026-11-14T14:12:41.9745896+00:00", "Log": "F       Sending HTTP request POST http://aicoach-api.internal.yellowpond-bc313828.brazilsouth.azurecontainerapps.io/auth/login"}
+{"TimeStamp": "2026-11-14T14:12:42.0041846+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.ClientHandler[101]"}
+{"TimeStamp": "2026-11-14T14:12:42.0042163+00:00", "Log": "F       Received HTTP response headers after 29.3643ms - 405"}
+{"TimeStamp": "2026-11-14T14:12:42.0042283+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.LogicalHandler[101]"}
+{"TimeStamp": "2026-11-14T14:12:42.0042302+00:00", "Log": "F       End processing HTTP request after 29.5846ms - 405"}
+{"TimeStamp": "2026-11-14T14:12:42.0045722+00:00", "Log": "F warn: AiCoachBff.Api.Services.WebhookService[0]"}
+{"TimeStamp": "2026-11-14T14:12:42.0045955+00:00", "Log": "F       Demo: lookup de bloqueio falhou para 5541998778427 \u2014 seguindo o fluxo normal."}
+{"TimeStamp": "2026-11-14T14:12:42.0046042+00:00", "Log": "F       System.Net.Http.HttpRequestException: Response status code does not indicate success: 405 (Method Not Allowed)."}
+{"TimeStamp": "2026-11-14T14:12:42.0046069+00:00", "Log": "F          at System.Net.Http.HttpResponseMessage.EnsureSuccessStatusCode()"}
+{"TimeStamp": "2026-11-14T14:12:42.0046088+00:00", "Log": "F          at AiCoachBff.Api.Services.AiCoachClient.GetTokenAsync(CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/AiCoachClient.cs:line 162"}
+{"TimeStamp": "2026-11-14T14:12:42.0046111+00:00", "Log": "F          at AiCoachBff.Api.Services.AiCoachClient.LookupUserAsync(String phone, CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/AiCoachClient.cs:line 54"}
+{"TimeStamp": "2026-11-14T14:12:42.0046133+00:00", "Log": "F          at AiCoachBff.Api.Services.WebhookService.BloqueadoForaDaAllowlistAsync(String waId, CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/WebhookService.cs:line 114"}
+{"TimeStamp": "2026-11-14T14:12:42.0049401+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.LogicalHandler[100]"}
+{"TimeStamp": "2026-11-14T14:12:42.0049534+00:00", "Log": "F       Start processing HTTP request POST http://aicoach-api.internal.yellowpond-bc313828.brazilsouth.azurecontainerapps.io/auth/login"}
+{"TimeStamp": "2026-11-14T14:12:42.0049595+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.ClientHandler[100]"}
+{"TimeStamp": "2026-11-14T14:12:42.0049619+00:00", "Log": "F       Sending HTTP request POST http://aicoach-api.internal.yellowpond-bc313828.brazilsouth.azurecontainerapps.io/auth/login"}
+{"TimeStamp": "2026-11-14T14:12:42.0173465+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.ClientHandler[101]"}
+{"TimeStamp": "2026-11-14T14:12:42.0173784+00:00", "Log": "F       Received HTTP response headers after 11.1997ms - 405"}
+{"TimeStamp": "2026-11-14T14:12:42.0173917+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.LogicalHandler[101]"}
+{"TimeStamp": "2026-11-14T14:12:42.0173939+00:00", "Log": "F       End processing HTTP request after 11.4253ms - 405"}
+{"TimeStamp": "2026-11-14T14:12:42.0173957+00:00", "Log": "F fail: AiCoachBff.Api.Services.WebhookService[0]"}
+{"TimeStamp": "2026-11-14T14:12:42.0173975+00:00", "Log": "F       Falha ao processar mensagem demo-85261b89c37145f49150e7fcefa8a1e8 de 5541998778427."}
+{"TimeStamp": "2026-11-14T14:12:42.0174127+00:00", "Log": "F       System.Net.Http.HttpRequestException: Response status code does not indicate success: 405 (Method Not Allowed)."}
+{"TimeStamp": "2026-11-14T14:12:42.0174147+00:00", "Log": "F          at System.Net.Http.HttpResponseMessage.EnsureSuccessStatusCode()"}
+{"TimeStamp": "2026-11-14T14:12:42.0174166+00:00", "Log": "F          at AiCoachBff.Api.Services.AiCoachClient.GetTokenAsync(CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/AiCoachClient.cs:line 162"}
+{"TimeStamp": "2026-11-14T14:12:42.0174185+00:00", "Log": "F          at AiCoachBff.Api.Services.AiCoachClient.LookupUserAsync(String phone, CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/AiCoachClient.cs:line 54"}
+{"TimeStamp": "2026-11-14T14:12:42.0174859+00:00", "Log": "F          at AiCoachBff.Api.Services.WebhookService.ReplyFromCoachAsync(String waId, String text, String profileName, IOutboundSink sink, CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/WebhookService.cs:line 170"}
+{"TimeStamp": "2026-11-14T14:12:42.0174924+00:00", "Log": "F          at AiCoachBff.Api.Services.WebhookService.HandleCoreAsync(InboundMessage message, String profileName, IOutboundSink sink, CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/WebhookService.cs:line 148"}
+{"TimeStamp": "2026-11-14T14:13:15.5735687+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.LogicalHandler[100]"}
+{"TimeStamp": "2026-11-14T14:13:15.5736035+00:00", "Log": "F       Start processing HTTP request POST http://aicoach-api.internal.yellowpond-bc313828.brazilsouth.azurecontainerapps.io/auth/login"}
+{"TimeStamp": "2026-11-14T14:13:15.5736155+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.ClientHandler[100]"}
+{"TimeStamp": "2026-11-14T14:13:15.5736183+00:00", "Log": "F       Sending HTTP request POST http://aicoach-api.internal.yellowpond-bc313828.brazilsouth.azurecontainerapps.io/auth/login"}
+{"TimeStamp": "2026-11-14T14:13:15.5884091+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.ClientHandler[101]"}
+{"TimeStamp": "2026-11-14T14:13:15.588452+00:00", "Log": "F       Received HTTP response headers after 14.8136ms - 405"}
+{"TimeStamp": "2026-11-14T14:13:15.5884641+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.LogicalHandler[101]"}
+{"TimeStamp": "2026-11-14T14:13:15.5884666+00:00", "Log": "F       End processing HTTP request after 14.9701ms - 405"}
+{"TimeStamp": "2026-11-14T14:13:15.588846+00:00", "Log": "F warn: AiCoachBff.Api.Services.WebhookService[0]"}
+{"TimeStamp": "2026-11-14T14:13:15.5889661+00:00", "Log": "F       Demo: lookup de bloqueio falhou para 5541998778427 \u2014 seguindo o fluxo normal."}
+{"TimeStamp": "2026-11-14T14:13:15.5889765+00:00", "Log": "F       System.Net.Http.HttpRequestException: Response status code does not indicate success: 405 (Method Not Allowed)."}
+{"TimeStamp": "2026-11-14T14:13:15.5889798+00:00", "Log": "F          at System.Net.Http.HttpResponseMessage.EnsureSuccessStatusCode()"}
+{"TimeStamp": "2026-11-14T14:13:15.5889822+00:00", "Log": "F          at AiCoachBff.Api.Services.AiCoachClient.GetTokenAsync(CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/AiCoachClient.cs:line 162"}
+{"TimeStamp": "2026-11-14T14:13:15.5889872+00:00", "Log": "F          at AiCoachBff.Api.Services.AiCoachClient.LookupUserAsync(String phone, CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/AiCoachClient.cs:line 54"}
+{"TimeStamp": "2026-11-14T14:13:15.5889894+00:00", "Log": "F          at AiCoachBff.Api.Services.WebhookService.BloqueadoForaDaAllowlistAsync(String waId, CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/WebhookService.cs:line 114"}
+{"TimeStamp": "2026-11-14T14:13:15.5890493+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.LogicalHandler[100]"}
+{"TimeStamp": "2026-11-14T14:13:15.5890547+00:00", "Log": "F       Start processing HTTP request POST http://aicoach-api.internal.yellowpond-bc313828.brazilsouth.azurecontainerapps.io/auth/login"}
+{"TimeStamp": "2026-11-14T14:13:15.5890576+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.ClientHandler[100]"}
+{"TimeStamp": "2026-11-14T14:13:15.5890598+00:00", "Log": "F       Sending HTTP request POST http://aicoach-api.internal.yellowpond-bc313828.brazilsouth.azurecontainerapps.io/auth/login"}
+{"TimeStamp": "2026-11-14T14:13:15.5976725+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.ClientHandler[101]"}
+{"TimeStamp": "2026-11-14T14:13:15.5976934+00:00", "Log": "F       Received HTTP response headers after 8.35ms - 405"}
+{"TimeStamp": "2026-11-14T14:13:15.5977035+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.LogicalHandler[101]"}
+{"TimeStamp": "2026-11-14T14:13:15.597706+00:00", "Log": "F       End processing HTTP request after 8.5348ms - 405"}
+{"TimeStamp": "2026-11-14T14:13:15.5980015+00:00", "Log": "F fail: AiCoachBff.Api.Services.WebhookService[0]"}
+{"TimeStamp": "2026-11-14T14:13:15.5980164+00:00", "Log": "F       Falha ao processar mensagem demo-a475d02254334f6db04bfb8a3cf3c2bd de 5541998778427."}
+{"TimeStamp": "2026-11-14T14:13:15.5980228+00:00", "Log": "F       System.Net.Http.HttpRequestException: Response status code does not indicate success: 405 (Method Not Allowed)."}
+{"TimeStamp": "2026-11-14T14:13:15.5980281+00:00", "Log": "F          at System.Net.Http.HttpResponseMessage.EnsureSuccessStatusCode()"}
+{"TimeStamp": "2026-11-14T14:13:15.5980301+00:00", "Log": "F          at AiCoachBff.Api.Services.AiCoachClient.GetTokenAsync(CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/AiCoachClient.cs:line 162"}
+{"TimeStamp": "2026-11-14T14:13:15.5980321+00:00", "Log": "F          at AiCoachBff.Api.Services.AiCoachClient.LookupUserAsync(String phone, CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/AiCoachClient.cs:line 54"}
+{"TimeStamp": "2026-11-14T14:13:15.598034+00:00", "Log": "F          at AiCoachBff.Api.Services.WebhookService.ReplyFromCoachAsync(String waId, String text, String profileName, IOutboundSink sink, CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/WebhookService.cs:line 170"}
+{"TimeStamp": "2026-11-14T14:13:15.5981325+00:00", "Log": "F          at AiCoachBff.Api.Services.WebhookService.HandleCoreAsync(InboundMessage message, String profileName, IOutboundSink sink, CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/WebhookService.cs:line 148"}
+{"TimeStamp": "2026-11-14T14:14:12.0652209+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.LogicalHandler[100]"}
+{"TimeStamp": "2026-11-14T14:14:12.0652595+00:00", "Log": "F       Start processing HTTP request POST http://aicoach-api.internal.yellowpond-bc313828.brazilsouth.azurecontainerapps.io/auth/login"}
+{"TimeStamp": "2026-11-14T14:14:12.0652752+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.ClientHandler[100]"}
+{"TimeStamp": "2026-11-14T14:14:12.0652778+00:00", "Log": "F       Sending HTTP request POST http://aicoach-api.internal.yellowpond-bc313828.brazilsouth.azurecontainerapps.io/auth/login"}
+{"TimeStamp": "2026-11-14T14:14:12.0776543+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.ClientHandler[101]"}
+{"TimeStamp": "2026-11-14T14:14:12.0777244+00:00", "Log": "F       Received HTTP response headers after 12.394ms - 405"}
+{"TimeStamp": "2026-11-14T14:14:12.0777389+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.LogicalHandler[101]"}
+{"TimeStamp": "2026-11-14T14:14:12.0777464+00:00", "Log": "F       End processing HTTP request after 12.5296ms - 405"}
+{"TimeStamp": "2026-11-14T14:14:12.0780821+00:00", "Log": "F warn: AiCoachBff.Api.Services.WebhookService[0]"}
+{"TimeStamp": "2026-11-14T14:14:12.0781196+00:00", "Log": "F       Demo: lookup de bloqueio falhou para 5541998778427 \u2014 seguindo o fluxo normal."}
+{"TimeStamp": "2026-11-14T14:14:12.0781281+00:00", "Log": "F       System.Net.Http.HttpRequestException: Response status code does not indicate success: 405 (Method Not Allowed)."}
+{"TimeStamp": "2026-11-14T14:14:12.0781308+00:00", "Log": "F          at System.Net.Http.HttpResponseMessage.EnsureSuccessStatusCode()"}
+{"TimeStamp": "2026-11-14T14:14:12.0781355+00:00", "Log": "F          at AiCoachBff.Api.Services.AiCoachClient.GetTokenAsync(CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/AiCoachClient.cs:line 162"}
+{"TimeStamp": "2026-11-14T14:14:12.0781377+00:00", "Log": "F          at AiCoachBff.Api.Services.AiCoachClient.LookupUserAsync(String phone, CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/AiCoachClient.cs:line 54"}
+{"TimeStamp": "2026-11-14T14:14:12.0781397+00:00", "Log": "F          at AiCoachBff.Api.Services.WebhookService.BloqueadoForaDaAllowlistAsync(String waId, CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/WebhookService.cs:line 114"}
+{"TimeStamp": "2026-11-14T14:14:12.0782597+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.LogicalHandler[100]"}
+{"TimeStamp": "2026-11-14T14:14:12.0782679+00:00", "Log": "F       Start processing HTTP request POST http://aicoach-api.internal.yellowpond-bc313828.brazilsouth.azurecontainerapps.io/auth/login"}
+{"TimeStamp": "2026-11-14T14:14:12.0782719+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.ClientHandler[100]"}
+{"TimeStamp": "2026-11-14T14:14:12.0782742+00:00", "Log": "F       Sending HTTP request POST http://aicoach-api.internal.yellowpond-bc313828.brazilsouth.azurecontainerapps.io/auth/login"}
+{"TimeStamp": "2026-11-14T14:14:12.0876293+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.ClientHandler[101]"}
+{"TimeStamp": "2026-11-14T14:14:12.0876588+00:00", "Log": "F       Received HTTP response headers after 9.1862ms - 405"}
+{"TimeStamp": "2026-11-14T14:14:12.0876711+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.LogicalHandler[101]"}
+{"TimeStamp": "2026-11-14T14:14:12.0876736+00:00", "Log": "F       End processing HTTP request after 9.3124ms - 405"}
+{"TimeStamp": "2026-11-14T14:14:12.0885158+00:00", "Log": "F fail: AiCoachBff.Api.Services.WebhookService[0]"}
+{"TimeStamp": "2026-11-14T14:14:12.0885371+00:00", "Log": "F       Falha ao processar mensagem demo-2aa6c0a463734a0fa182a63454b056d5 de 5541998778427."}
+{"TimeStamp": "2026-11-14T14:14:12.0885468+00:00", "Log": "F       System.Net.Http.HttpRequestException: Response status code does not indicate success: 405 (Method Not Allowed)."}
+{"TimeStamp": "2026-11-14T14:14:12.0885496+00:00", "Log": "F          at System.Net.Http.HttpResponseMessage.EnsureSuccessStatusCode()"}
+{"TimeStamp": "2026-11-14T14:14:12.0885556+00:00", "Log": "F          at AiCoachBff.Api.Services.AiCoachClient.GetTokenAsync(CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/AiCoachClient.cs:line 162"}
+{"TimeStamp": "2026-11-14T14:14:12.088558+00:00", "Log": "F          at AiCoachBff.Api.Services.AiCoachClient.LookupUserAsync(String phone, CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/AiCoachClient.cs:line 54"}
+{"TimeStamp": "2026-11-14T14:14:12.0885603+00:00", "Log": "F          at AiCoachBff.Api.Services.WebhookService.ReplyFromCoachAsync(String waId, String text, String profileName, IOutboundSink sink, CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/WebhookService.cs:line 170"}
+{"TimeStamp": "2026-11-14T14:14:12.0886695+00:00", "Log": "F          at AiCoachBff.Api.Services.WebhookService.HandleCoreAsync(InboundMessage message, String profileName, IOutboundSink sink, CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/WebhookService.cs:line 148"}
+{"TimeStamp": "2026-11-14T14:14:45.6415445+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.LogicalHandler[100]"}
+{"TimeStamp": "2026-11-14T14:14:45.6415803+00:00", "Log": "F       Start processing HTTP request POST http://aicoach-api.internal.yellowpond-bc313828.brazilsouth.azurecontainerapps.io/auth/login"}
+{"TimeStamp": "2026-11-14T14:14:45.6415951+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.ClientHandler[100]"}
+{"TimeStamp": "2026-11-14T14:14:45.641598+00:00", "Log": "F       Sending HTTP request POST http://aicoach-api.internal.yellowpond-bc313828.brazilsouth.azurecontainerapps.io/auth/login"}
+{"TimeStamp": "2026-11-14T14:14:45.663312+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.ClientHandler[101]"}
+{"TimeStamp": "2026-11-14T14:14:45.6633502+00:00", "Log": "F       Received HTTP response headers after 22.0183ms - 405"}
+{"TimeStamp": "2026-11-14T14:14:45.6633655+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.LogicalHandler[101]"}
+{"TimeStamp": "2026-11-14T14:14:45.6633681+00:00", "Log": "F       End processing HTTP request after 22.1314ms - 405"}
+{"TimeStamp": "2026-11-14T14:14:45.6637625+00:00", "Log": "F warn: AiCoachBff.Api.Services.WebhookService[0]"}
+{"TimeStamp": "2026-11-14T14:14:45.6637829+00:00", "Log": "F       Demo: lookup de bloqueio falhou para 5541998778427 \u2014 seguindo o fluxo normal."}
+{"TimeStamp": "2026-11-14T14:14:45.6637913+00:00", "Log": "F       System.Net.Http.HttpRequestException: Response status code does not indicate success: 405 (Method Not Allowed)."}
+{"TimeStamp": "2026-11-14T14:14:45.6637938+00:00", "Log": "F          at System.Net.Http.HttpResponseMessage.EnsureSuccessStatusCode()"}
+{"TimeStamp": "2026-11-14T14:14:45.6637959+00:00", "Log": "F          at AiCoachBff.Api.Services.AiCoachClient.GetTokenAsync(CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/AiCoachClient.cs:line 162"}
+{"TimeStamp": "2026-11-14T14:14:45.6637981+00:00", "Log": "F          at AiCoachBff.Api.Services.AiCoachClient.LookupUserAsync(String phone, CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/AiCoachClient.cs:line 54"}
+{"TimeStamp": "2026-11-14T14:14:45.6638003+00:00", "Log": "F          at AiCoachBff.Api.Services.WebhookService.BloqueadoForaDaAllowlistAsync(String waId, CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/WebhookService.cs:line 114"}
+{"TimeStamp": "2026-11-14T14:14:45.6639197+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.LogicalHandler[100]"}
+{"TimeStamp": "2026-11-14T14:14:45.6639327+00:00", "Log": "F       Start processing HTTP request POST http://aicoach-api.internal.yellowpond-bc313828.brazilsouth.azurecontainerapps.io/auth/login"}
+{"TimeStamp": "2026-11-14T14:14:45.663937+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.ClientHandler[100]"}
+{"TimeStamp": "2026-11-14T14:14:45.6639391+00:00", "Log": "F       Sending HTTP request POST http://aicoach-api.internal.yellowpond-bc313828.brazilsouth.azurecontainerapps.io/auth/login"}
+{"TimeStamp": "2026-11-14T14:14:45.6771395+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.ClientHandler[101]"}
+{"TimeStamp": "2026-11-14T14:14:45.6771697+00:00", "Log": "F       Received HTTP response headers after 13.0473ms - 405"}
+{"TimeStamp": "2026-11-14T14:14:45.6771801+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.LogicalHandler[101]"}
+{"TimeStamp": "2026-11-14T14:14:45.6771819+00:00", "Log": "F       End processing HTTP request after 13.1422ms - 405"}
+{"TimeStamp": "2026-11-14T14:14:45.6776669+00:00", "Log": "F fail: AiCoachBff.Api.Services.WebhookService[0]"}
+{"TimeStamp": "2026-11-14T14:14:45.6776822+00:00", "Log": "F       Falha ao processar mensagem demo-613d9e3ceb064b049219ff3a8a313b86 de 5541998778427."}
+{"TimeStamp": "2026-11-14T14:14:45.6776935+00:00", "Log": "F       System.Net.Http.HttpRequestException: Response status code does not indicate success: 405 (Method Not Allowed)."}
+{"TimeStamp": "2026-11-14T14:14:45.6776952+00:00", "Log": "F          at System.Net.Http.HttpResponseMessage.EnsureSuccessStatusCode()"}
+{"TimeStamp": "2026-11-14T14:14:45.6776964+00:00", "Log": "F          at AiCoachBff.Api.Services.AiCoachClient.GetTokenAsync(CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/AiCoachClient.cs:line 162"}
+{"TimeStamp": "2026-11-14T14:14:45.6776981+00:00", "Log": "F          at AiCoachBff.Api.Services.AiCoachClient.LookupUserAsync(String phone, CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/AiCoachClient.cs:line 54"}
+{"TimeStamp": "2026-11-14T14:14:45.6777022+00:00", "Log": "F          at AiCoachBff.Api.Services.WebhookService.ReplyFromCoachAsync(String waId, String text, String profileName, IOutboundSink sink, CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/WebhookService.cs:line 170"}
+{"TimeStamp": "2026-11-14T14:14:45.6777821+00:00", "Log": "F          at AiCoachBff.Api.Services.WebhookService.HandleCoreAsync(InboundMessage message, String profileName, IOutboundSink sink, CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/WebhookService.cs:line 148"}
+{"TimeStamp": "2026-11-14T14:15:42.1400079+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.LogicalHandler[100]"}
+{"TimeStamp": "2026-11-14T14:15:42.140043+00:00", "Log": "F       Start processing HTTP request POST http://aicoach-api.internal.yellowpond-bc313828.brazilsouth.azurecontainerapps.io/auth/login"}
+{"TimeStamp": "2026-11-14T14:15:42.1400569+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.ClientHandler[100]"}
+{"TimeStamp": "2026-11-14T14:15:42.1400639+00:00", "Log": "F       Sending HTTP request POST http://aicoach-api.internal.yellowpond-bc313828.brazilsouth.azurecontainerapps.io/auth/login"}
+{"TimeStamp": "2026-11-14T14:15:42.1502705+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.ClientHandler[101]"}
+{"TimeStamp": "2026-11-14T14:15:42.1502978+00:00", "Log": "F       Received HTTP response headers after 10.2576ms - 405"}
+{"TimeStamp": "2026-11-14T14:15:42.1503093+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.LogicalHandler[101]"}
+{"TimeStamp": "2026-11-14T14:15:42.1503108+00:00", "Log": "F       End processing HTTP request after 10.3902ms - 405"}
+{"TimeStamp": "2026-11-14T14:15:42.1506395+00:00", "Log": "F warn: AiCoachBff.Api.Services.WebhookService[0]"}
+{"TimeStamp": "2026-11-14T14:15:42.1506496+00:00", "Log": "F       Demo: lookup de bloqueio falhou para 5541998778427 \u2014 seguindo o fluxo normal."}
+{"TimeStamp": "2026-11-14T14:15:42.1506541+00:00", "Log": "F       System.Net.Http.HttpRequestException: Response status code does not indicate success: 405 (Method Not Allowed)."}
+{"TimeStamp": "2026-11-14T14:15:42.1506559+00:00", "Log": "F          at System.Net.Http.HttpResponseMessage.EnsureSuccessStatusCode()"}
+{"TimeStamp": "2026-11-14T14:15:42.1506602+00:00", "Log": "F          at AiCoachBff.Api.Services.AiCoachClient.GetTokenAsync(CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/AiCoachClient.cs:line 162"}
+{"TimeStamp": "2026-11-14T14:15:42.1506616+00:00", "Log": "F          at AiCoachBff.Api.Services.AiCoachClient.LookupUserAsync(String phone, CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/AiCoachClient.cs:line 54"}
+{"TimeStamp": "2026-11-14T14:15:42.1506629+00:00", "Log": "F          at AiCoachBff.Api.Services.WebhookService.BloqueadoForaDaAllowlistAsync(String waId, CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/WebhookService.cs:line 114"}
+{"TimeStamp": "2026-11-14T14:15:42.1508618+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.LogicalHandler[100]"}
+{"TimeStamp": "2026-11-14T14:15:42.1508701+00:00", "Log": "F       Start processing HTTP request POST http://aicoach-api.internal.yellowpond-bc313828.brazilsouth.azurecontainerapps.io/auth/login"}
+{"TimeStamp": "2026-11-14T14:15:42.1508745+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.ClientHandler[100]"}
+{"TimeStamp": "2026-11-14T14:15:42.1508767+00:00", "Log": "F       Sending HTTP request POST http://aicoach-api.internal.yellowpond-bc313828.brazilsouth.azurecontainerapps.io/auth/login"}
+{"TimeStamp": "2026-11-14T14:15:42.159706+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.ClientHandler[101]"}
+{"TimeStamp": "2026-11-14T14:15:42.1597251+00:00", "Log": "F       Received HTTP response headers after 8.7373ms - 405"}
+{"TimeStamp": "2026-11-14T14:15:42.1597346+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.LogicalHandler[101]"}
+{"TimeStamp": "2026-11-14T14:15:42.1597375+00:00", "Log": "F       End processing HTTP request after 8.8339ms - 405"}
+{"TimeStamp": "2026-11-14T14:15:42.1601174+00:00", "Log": "F fail: AiCoachBff.Api.Services.WebhookService[0]"}
+{"TimeStamp": "2026-11-14T14:15:42.1601316+00:00", "Log": "F       Falha ao processar mensagem demo-a99de53485b246d796713bd06c10bc42 de 5541998778427."}
+{"TimeStamp": "2026-11-14T14:15:42.1601387+00:00", "Log": "F       System.Net.Http.HttpRequestException: Response status code does not indicate success: 405 (Method Not Allowed)."}
+{"TimeStamp": "2026-11-14T14:15:42.1601413+00:00", "Log": "F          at System.Net.Http.HttpResponseMessage.EnsureSuccessStatusCode()"}
+{"TimeStamp": "2026-11-14T14:15:42.1601433+00:00", "Log": "F          at AiCoachBff.Api.Services.AiCoachClient.GetTokenAsync(CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/AiCoachClient.cs:line 162"}
+{"TimeStamp": "2026-11-14T14:15:42.1601484+00:00", "Log": "F          at AiCoachBff.Api.Services.AiCoachClient.LookupUserAsync(String phone, CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/AiCoachClient.cs:line 54"}
+{"TimeStamp": "2026-11-14T14:15:42.1601502+00:00", "Log": "F          at AiCoachBff.Api.Services.WebhookService.ReplyFromCoachAsync(String waId, String text, String profileName, IOutboundSink sink, CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/WebhookService.cs:line 170"}
+{"TimeStamp": "2026-11-14T14:15:42.160251+00:00", "Log": "F          at AiCoachBff.Api.Services.WebhookService.HandleCoreAsync(InboundMessage message, String profileName, IOutboundSink sink, CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/WebhookService.cs:line 148"}
+{"TimeStamp": "2026-11-14T14:16:15.7249561+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.LogicalHandler[100]"}
+{"TimeStamp": "2026-11-14T14:16:15.7249885+00:00", "Log": "F       Start processing HTTP request POST http://aicoach-api.internal.yellowpond-bc313828.brazilsouth.azurecontainerapps.io/auth/login"}
+{"TimeStamp": "2026-11-14T14:16:15.7250008+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.ClientHandler[100]"}
+{"TimeStamp": "2026-11-14T14:16:15.7250033+00:00", "Log": "F       Sending HTTP request POST http://aicoach-api.internal.yellowpond-bc313828.brazilsouth.azurecontainerapps.io/auth/login"}
+{"TimeStamp": "2026-11-14T14:16:15.7447545+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.ClientHandler[101]"}
+{"TimeStamp": "2026-11-14T14:16:15.744789+00:00", "Log": "F       Received HTTP response headers after 17.4219ms - 405"}
+{"TimeStamp": "2026-11-14T14:16:15.744803+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.LogicalHandler[101]"}
+{"TimeStamp": "2026-11-14T14:16:15.7448057+00:00", "Log": "F       End processing HTTP request after 17.5495ms - 405"}
+{"TimeStamp": "2026-11-14T14:16:15.744808+00:00", "Log": "F warn: AiCoachBff.Api.Services.WebhookService[0]"}
+{"TimeStamp": "2026-11-14T14:16:15.74481+00:00", "Log": "F       Demo: lookup de bloqueio falhou para 5541998778427 \u2014 seguindo o fluxo normal."}
+{"TimeStamp": "2026-11-14T14:16:15.7448182+00:00", "Log": "F       System.Net.Http.HttpRequestException: Response status code does not indicate success: 405 (Method Not Allowed)."}
+{"TimeStamp": "2026-11-14T14:16:15.7448204+00:00", "Log": "F          at System.Net.Http.HttpResponseMessage.EnsureSuccessStatusCode()"}
+{"TimeStamp": "2026-11-14T14:16:15.7448226+00:00", "Log": "F          at AiCoachBff.Api.Services.AiCoachClient.GetTokenAsync(CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/AiCoachClient.cs:line 162"}
+{"TimeStamp": "2026-11-14T14:16:15.7448249+00:00", "Log": "F          at AiCoachBff.Api.Services.AiCoachClient.LookupUserAsync(String phone, CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/AiCoachClient.cs:line 54"}
+{"TimeStamp": "2026-11-14T14:16:15.744894+00:00", "Log": "F          at AiCoachBff.Api.Services.WebhookService.BloqueadoForaDaAllowlistAsync(String waId, CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/WebhookService.cs:line 114"}
+{"TimeStamp": "2026-11-14T14:16:15.7448998+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.LogicalHandler[100]"}
+{"TimeStamp": "2026-11-14T14:16:15.7449026+00:00", "Log": "F       Start processing HTTP request POST http://aicoach-api.internal.yellowpond-bc313828.brazilsouth.azurecontainerapps.io/auth/login"}
+{"TimeStamp": "2026-11-14T14:16:15.7449064+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.ClientHandler[100]"}
+{"TimeStamp": "2026-11-14T14:16:15.7449084+00:00", "Log": "F       Sending HTTP request POST http://aicoach-api.internal.yellowpond-bc313828.brazilsouth.azurecontainerapps.io/auth/login"}
+{"TimeStamp": "2026-11-14T14:16:15.7532809+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.ClientHandler[101]"}
+{"TimeStamp": "2026-11-14T14:16:15.7533148+00:00", "Log": "F       Received HTTP response headers after 10.1286ms - 405"}
+{"TimeStamp": "2026-11-14T14:16:15.7533282+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.LogicalHandler[101]"}
+{"TimeStamp": "2026-11-14T14:16:15.7533299+00:00", "Log": "F       End processing HTTP request after 10.2356ms - 405"}
+{"TimeStamp": "2026-11-14T14:16:15.7540243+00:00", "Log": "F fail: AiCoachBff.Api.Services.WebhookService[0]"}
+{"TimeStamp": "2026-11-14T14:16:15.7540481+00:00", "Log": "F       Falha ao processar mensagem demo-ca39906448aa4352a8ad3fb11902253c de 5541998778427."}
+{"TimeStamp": "2026-11-14T14:16:15.7540575+00:00", "Log": "F       System.Net.Http.HttpRequestException: Response status code does not indicate success: 405 (Method Not Allowed)."}
+{"TimeStamp": "2026-11-14T14:16:15.7540596+00:00", "Log": "F          at System.Net.Http.HttpResponseMessage.EnsureSuccessStatusCode()"}
+{"TimeStamp": "2026-11-14T14:16:15.7540616+00:00", "Log": "F          at AiCoachBff.Api.Services.AiCoachClient.GetTokenAsync(CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/AiCoachClient.cs:line 162"}
+{"TimeStamp": "2026-11-14T14:16:15.7540685+00:00", "Log": "F          at AiCoachBff.Api.Services.AiCoachClient.LookupUserAsync(String phone, CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/AiCoachClient.cs:line 54"}
+{"TimeStamp": "2026-11-14T14:16:15.7540709+00:00", "Log": "F          at AiCoachBff.Api.Services.WebhookService.ReplyFromCoachAsync(String waId, String text, String profileName, IOutboundSink sink, CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/WebhookService.cs:line 170"}
+{"TimeStamp": "2026-11-14T14:16:15.754176+00:00", "Log": "F          at AiCoachBff.Api.Services.WebhookService.HandleCoreAsync(InboundMessage message, String profileName, IOutboundSink sink, CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/WebhookService.cs:line 148"}
