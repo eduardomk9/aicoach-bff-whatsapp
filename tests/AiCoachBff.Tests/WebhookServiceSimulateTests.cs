@@ -196,7 +196,7 @@ public sealed class WebhookServiceSimulateTests
         var replies = await service.SimulateAsync(Texto(), null, CancellationToken.None);
 
         replies.Should().ContainSingle().Which.Should().BeOfType<Outbound.Text>()
-            .Which.Body.Should().Be("fallback");
+            .Which.Body.Should().Be("fallback [503]");
     }
 
     [Fact]
