@@ -1,0 +1,12 @@
+.git
+.vs
+.claude
+.github
+docs
+**/bin
+**/obj
+**/TestResults
+**/publish
+**/media-generated
+**/media-body
+**/*.user
