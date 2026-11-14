@@ -38,6 +38,32 @@ Settings → Secrets and variables → Actions (mesmos valores do repo da API):
 
 A 1ª execução fica vermelha até a fundação existir (fase 6–8 do DEPLOY da API).
 
+## Segredos/config do app (fase 6, aplicada 1x — PATCH completo quando mexer)
+
+`aicoach-bff` (external, min 1, 0.5/1.0Gi): secrets `meta-access-token`,
+`meta-webhook-token`, `meta-app-secret` (dummy até a conta Meta — F7),
+`aicoach-service-password`, `demo-access-key`, `acr-password`; env
+`AiCoach__BaseUrl` (**https://** aicoach-api.internal... — sem https o ingress
+redireciona http→https e o POST vira GET: 405), `AiCoach__ServiceEmail`,
+`AiCoach__ServicePassword=secretref:`, `Meta__*` (3 secretrefs + ApiVersion +
+PhoneNumberId), `Demo__AccessKey=secretref:`, `Demo__AllowedPhones__0`
+(allowlist do demo; número novo faz onboard normal).
+
+**RÉGUA: PATCH de `configuration` do Container Apps substitui a lista INTEIRA —
+secrets + ingress + registries vão JUNTOS em qualquer PATCH (o parcial amputou
+o ingress por horas na noite de 14/11: 405 no login).**
+
+## Diagnóstico sem a rota local→Azure (morre em rajadas 10054)
+
+Workflow `diag-logs.yml`: push de `diag-logs.flag` → runner puxa logs
+(200 linhas) + tags do ACR + imagem/rev/status de ambos os apps e
+COMMITA no repo → `git pull` local lê (`logs-api.txt`, `logs-bff.txt`,
+`estado-apps.txt`). O flag sai no mesmo commit do runner (self-clean).
+
+## E2E
+
+Provas P1/P2/P5 executadas e verdes (docs/E2E-demo.md). P3/P4 = F7.
+
 ## Criação do app (fase 9 do DEPLOY da API)
 
 O BFF depende de `<FQDN_INTERNO_DA_API>` (comando do passo 9 do runbook da API).
