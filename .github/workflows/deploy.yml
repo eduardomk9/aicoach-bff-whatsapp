@@ -1,0 +1,57 @@
+# Deploy do BFF do WhatsApp (R20 F5). Molde CheckFine: testes → login Azure →
+# build da imagem no ACR → image-swap no Container App (a pipeline NÃO toca em
+# secrets/env — o app mantém os que foram criados à mão).
+#
+# Config 1x em Settings → Secrets and variables → Actions:
+#   Secret  AZURE_CREDENTIALS  → JSON do SPN (az ad sp create-for-rbac --sdk-auth)
+#   Variable ACR_NAME          → nome do ACR (ex.:  aicoachregsuf01) — criado na F6
+#
+# A 1ª execução fica VERMELHA até a F6 criar ACR + apps — depois fica verde.
+name: deploy
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-master
+  cancel-in-progress: true
+
+jobs:
+  test-and-deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      ACR: ${{ vars.ACR_NAME }}
+      RG: rg-aicoach
+      APP: aicoach-bff
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Restore
+        run: dotnet restore AiCoachBff.sln
+
+      - name: Build Release
+        run: dotnet build AiCoachBff.sln -c Release --no-restore
+
+      - name: Testes
+        run: dotnet test AiCoachBff.sln -c Release --no-build
+
+      - name: Login Azure (SPN)
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Build da imagem no ACR
+        run: az acr build --registry "$ACR" --image "$APP:$GITHUB_SHA" --file src/AiCoachBff.Api/Dockerfile .
+
+      - name: Image-swap no Container App
+        run: az containerapp update --resource-group "$RG" --name "$APP" --image "$ACR.azurecr.io/$APP:$GITHUB_SHA"
