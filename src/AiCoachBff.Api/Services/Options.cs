@@ -37,6 +37,26 @@ public sealed class AiCoachOptions
     public string ServicePassword { get; init; } = string.Empty;
 }
 
+/// <summary>Canal demo (R20 — front provisório mobile-first /demo). AccessKey é a trava
+/// do link público (?k=...); vazia em Production = endpoint INEXISTENTE (fail-closed).
+/// Não é segredo caro — não abre API nem Meta, só o canal de testes.</summary>
+public sealed class DemoOptions
+{
+    public const string Section = "Demo";
+
+    /// <summary>Chave que o visitante carrega no link (header X-Demo-Key).</summary>
+    public string AccessKey { get; init; } = string.Empty;
+
+    /// <summary>Números (formato canônico do BFF, digits-only com DDI) autorizados a
+    /// falar com o COACH pela demo. Número NOVO sempre passa (lead/onboarding é o
+    /// coração da demo); número JÁ CADASTRADO só passa se estiver aqui — sem essa
+    /// trava, quem tivesse a chave digitava o número real de um cliente e conversava
+    /// NA SESSÃO dele (corpus poluído, PDF pessoal vazando — review R20).
+    /// Vazio = NENHUM cliente pela demo (default seguro; o dono lista o próprio).
+    /// Na nuvem: secret/env Demo__AllowedPhones__0=55...</summary>
+    public string[] AllowedPhones { get; init; } = [];
+}
+
 /// <summary>Comportamento do BFF (espera do LLM, dedupe e mensagens de resposta fixa).</summary>
 public sealed class BffOptions
 {
@@ -56,6 +76,12 @@ public sealed class BffOptions
     /// <summary>Resposta fixa a mensagem não textual (áudio/imagem — extrator entrante é follow-up).</summary>
     public string NonTextMessage { get; init; } =
         "Por enquanto só entendo mensagens de texto — manda aí escrito! 💬";
+
+    /// <summary>Resposta fixa (só no canal demo) a número JÁ CADASTRADO fora da
+    /// allowlist da demo — o cliente real conversa pelo WhatsApp oficial; a sessão
+    /// dele não pode ser tocada pelo provisório.</summary>
+    public string KnownUserDemoMessage { get; init; } =
+        "Esse número já tem coach — a conversa dele é só pelo WhatsApp oficial. 😊";
 
     /// <summary>Resposta fixa quando a API/LLM falha (503, timeout) — o usuário nunca fica sem resposta.</summary>
     public string FallbackErrorMessage { get; init; } =

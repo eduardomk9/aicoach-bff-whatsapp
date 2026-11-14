@@ -1,0 +1,393 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#075e54">
+<title>AiCoach — Demo do coach</title>
+<style>
+  :root {
+    --wa-green: #25d366;
+    --wa-teal: #075e54;
+    --chat-bg: #efe7dd;
+    --bubble-own: #dcf8c6;
+    --bubble-other: #ffffff;
+    --ink: #1f2c34;
+    --soft: #667781;
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body {
+    font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: var(--ink);
+    background: #1b1b1b;
+    display: flex;
+    justify-content: center;
+  }
+  #app {
+    width: 100%;
+    max-width: 480px;
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    background: var(--chat-bg);
+  }
+  header {
+    background: var(--wa-teal);
+    color: #fff;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.25);
+  }
+  .avatar {
+    width: 40px; height: 40px; border-radius: 50%;
+    background: var(--wa-green); color: #063e33;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 18px; flex: none;
+  }
+  header .who { flex: 1; min-width: 0; }
+  header .who strong { display: block; font-size: 16px; }
+  header .who .status { font-size: 12px; color: #cde3de; }
+  .demo-chip {
+    font-size: 10px; line-height: 1.3; text-align: center;
+    background: rgba(255,255,255,.14); border-radius: 10px;
+    padding: 5px 8px; flex: none; max-width: 118px;
+  }
+  #chat {
+    flex: 1;
+    overflow-y: auto;
+    padding: 14px 12px 10px;
+    background-image: radial-gradient(rgba(0,0,0,.03) 1px, transparent 1px);
+    background-size: 18px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .row { display: flex; }
+  .row.own { justify-content: flex-end; }
+  .bubble {
+    max-width: 82%;
+    padding: 8px 10px;
+    border-radius: 10px;
+    font-size: 15px;
+    line-height: 1.35;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+    box-shadow: 0 1px 1px rgba(0,0,0,.12);
+  }
+  .own .bubble { background: var(--bubble-own); border-top-right-radius: 2px; }
+  .other .bubble { background: var(--bubble-other); border-top-left-radius: 2px; }
+  .bubble .caption { display: block; margin-bottom: 4px; }
+  .file-card {
+    display: flex; align-items: center; gap: 10px;
+    background: var(--bubble-other);
+    padding: 10px 12px; border-radius: 10px; max-width: 86%;
+    box-shadow: 0 1px 1px rgba(0,0,0,.12);
+  }
+  .file-card img.thumb { max-width: 150px; max-height: 150px; border-radius: 8px; display: block; }
+  .file-card .nothumb {
+    width: 38px; height: 38px; flex: none; border-radius: 8px;
+    background: #f1c40f; color: #6b5900; font-size: 20px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .file-card .info { min-width: 0; }
+  .file-card .info .f-name { font-size: 13px; font-weight: 600; word-break: break-all; }
+  .file-card .info .f-open {
+    font-size: 12px; color: var(--wa-teal); text-decoration: none; font-weight: 600;
+  }
+  .sys {
+    align-self: center;
+    background: rgba(255,255,255,.85);
+    color: var(--soft);
+    font-size: 12px;
+    padding: 6px 12px;
+    border-radius: 12px;
+    max-width: 88%;
+    text-align: center;
+  }
+  .sys.err { background: #ffe3e0; color: #a33; }
+  .typing .d { display: inline-block; width: 6px; height: 6px; margin: 0 1px; border-radius: 50%; background: var(--soft); animation: blink 1.2s infinite; }
+  .typing .d:nth-child(2) { animation-delay: .2s; }
+  .typing .d:nth-child(3) { animation-delay: .4s; }
+  @keyframes blink { 0%, 80%, 100% { opacity: .25; } 40% { opacity: 1; } }
+  .pane {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 24px 20px;
+    gap: 14px;
+    background: var(--chat-bg);
+  }
+  .pane h1 { font-size: 22px; margin: 0; color: var(--ink); }
+  .pane p { font-size: 14px; color: var(--soft); margin: 0 0 6px; }
+  .field label { display: block; font-size: 12px; font-weight: 600; color: var(--soft); margin-bottom: 4px; }
+  .field input {
+    width: 100%; padding: 12px; font-size: 16px;
+    border: 1px solid #d8d0c7; border-radius: 10px; background: #fff;
+    outline: none;
+  }
+  .field input:focus { border-color: var(--wa-green); box-shadow: 0 0 0 2px rgba(37,211,102,.2); }
+  button.primary {
+    width: 100%; padding: 13px; font-size: 16px; font-weight: 700;
+    border: 0; border-radius: 10px; cursor: pointer;
+    background: var(--wa-green); color: #063e33;
+  }
+  button.primary:disabled { opacity: .5; cursor: wait; }
+  footer { padding: 10px 12px calc(10px + env(safe-area-inset-bottom)); background: #f0f0f0; display: flex; gap: 8px; }
+  footer input {
+    flex: 1; padding: 11px; font-size: 15px;
+    border-radius: 20px; border: 1px solid #dcdcdc; background: #fff; outline: none;
+  }
+  footer button {
+    width: 44px; height: 44px; flex: none; border: 0; border-radius: 50%;
+    background: var(--wa-teal); color: #fff; font-size: 18px; cursor: pointer;
+  }
+  footer button:disabled { opacity: .55; cursor: wait; }
+  [hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<div id="app">
+  <header [hidden] id="header" hidden>
+    <div class="avatar">A</div>
+    <div class="who">
+      <strong>AiCoach</strong>
+      <div class="status" id="status">online</div>
+    </div>
+    <div class="demo-chip">versão web provisória — WhatsApp oficial a caminho</div>
+  </header>
+
+  <section class="pane" id="intro">
+    <h1>Teste o coach do AiCoach</h1>
+    <p>Digite o número do seu WhatsApp (com DDD). Sem conta? Já te registra no provisório e te mostra o onboarding.</p>
+    <div class="field">
+      <label for="phone">WhatsApp (com DDD)</label>
+      <input id="phone" inputmode="tel" autocomplete="tel" placeholder="5541999998888">
+    </div>
+    <div class="field">
+      <label for="name">Seu nome (opcional)</label>
+      <input id="name" autocomplete="given-name" placeholder="Como te chamamos?">
+    </div>
+    <button class="primary" id="start">Conversar com o coach</button>
+    <p id="intro-error" class="sys err" hidden></p>
+  </section>
+
+  <div id="chat" hidden></div>
+  <footer id="composer" hidden>
+    <input id="msg" placeholder="Escreve pro coach…" enterkeyhint="send">
+    <button id="send" aria-label="Enviar">➤</button>
+  </footer>
+</div>
+
+<script>
+(function () {
+  'use strict';
+  var demoKey = new URLSearchParams(location.search).get('k') || '';
+  if (history.replaceState && demoKey) {
+    var sem = location.origin + location.pathname;
+    history.replaceState(null, '', sem);
+  }
+  if (demoKey) { try { sessionStorage.setItem('demo.k', demoKey); } catch (e) {} }
+  else { try { demoKey = sessionStorage.getItem('demo.k') || ''; } catch (e) {} }
+
+  var phone = '', sending = false;
+  var $ = function (id) { return document.getElementById(id); };
+  var chat = $('chat'), intro = $('intro'), msg = $('msg');
+
+  function digitsOnly(v) { return (v || '').replace(/\D+/g, ''); }
+
+  function scrollBottom() { chat.scrollTop = chat.scrollHeight; }
+
+  function addText(text, own) {
+    var row = document.createElement('div');
+    row.className = 'row ' + (own ? 'own' : 'other');
+    var b = document.createElement('div');
+    b.className = 'bubble';
+    b.textContent = text;
+    row.appendChild(b);
+    chat.appendChild(row);
+    scrollBottom();
+  }
+
+  function addSys(text, isErr) {
+    var d = document.createElement('div');
+    d.className = 'sys' + (isErr ? ' err' : '');
+    d.textContent = text;
+    chat.appendChild(d);
+    scrollBottom();
+  }
+
+  var typingRow = null;
+  function typing(on) {
+    if (on && !typingRow) {
+      typingRow = document.createElement('div');
+      typingRow.className = 'row other';
+      var b = document.createElement('div');
+      b.className = 'bubble typing';
+      b.innerHTML = '<span class="d"></span><span class="d"></span><span class="d"></span>';
+      typingRow.appendChild(b);
+      chat.appendChild(typingRow);
+      scrollBottom();
+    } else if (!on && typingRow) {
+      typingRow.remove();
+      typingRow = null;
+    }
+  }
+
+  function base64ToBlob(dataB64, contentType) {
+    var bin = atob(dataB64);
+    var bytes = new Uint8Array(bin.length);
+    for (var i = 0; i < bin.length; i++) { bytes[i] = bin.charCodeAt(i); }
+    return new Blob([bytes], { type: contentType });
+  }
+
+  function addFile(reply) {
+    var captionRow = null;
+    if (reply.caption) {
+      captionRow = document.createElement('div');
+      captionRow.className = 'row other';
+      var cap = document.createElement('div');
+      cap.className = 'bubble';
+      cap.textContent = reply.caption;
+      captionRow.appendChild(cap);
+    }
+    var row = document.createElement('div');
+    row.className = 'row other';
+    var card = document.createElement('div');
+    card.className = 'file-card';
+    var isImg = /^image\//i.test(reply.contentType || '');
+    var blob = base64ToBlob(reply.data, reply.contentType || 'application/octet-stream');
+    var url = URL.createObjectURL(blob);
+    if (isImg) {
+      var img = document.createElement('img');
+      img.className = 'thumb';
+      img.src = url;
+      img.alt = reply.fileName;
+      card.appendChild(img);
+    } else {
+      var ic = document.createElement('div');
+      ic.className = 'nothumb';
+      ic.textContent = 'PDF';
+      card.appendChild(ic);
+    }
+    var info = document.createElement('div');
+    info.className = 'info';
+    var name = document.createElement('div');
+    name.className = 'f-name';
+    name.textContent = reply.fileName;
+    var open = document.createElement('a');
+    open.className = 'f-open';
+    open.href = url;
+    open.target = '_blank';
+    open.rel = 'noopener';
+    open.textContent = 'Abrir';
+    info.appendChild(name);
+    info.appendChild(open);
+    card.appendChild(info);
+    if (captionRow) { chat.appendChild(captionRow); }
+    row.appendChild(card);
+    chat.appendChild(row);
+    scrollBottom();
+  }
+
+  function errorText(status, body) {
+    if (status === 403) return 'Acesso recusado — pede ao AiCoach o link com a chave.';
+    if (status === 404) return 'O canal demo está desligado agora — tenta de novo mais tarde.';
+    var erro = body && body.error;
+    return erro || 'Não consegui falar com o coach agora — tenta de novo em instantes.';
+  }
+
+  async function send(text) {
+    if (sending) return;
+    sending = true;
+    $('send').disabled = true;
+    msg.disabled = true;
+    addText(text, true);
+    typing(true);
+    var ok = true;
+    try {
+      var r = await fetch('/demo/message', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Demo-Key': demoKey
+        },
+        body: JSON.stringify({ phone: phone, name: $('name').value.trim() || null, text: text })
+      });
+      typing(false);
+      var body = null;
+      try { body = await r.json(); } catch (e) {}
+      if (!r.ok) {
+        addSys(errorText(r.status, body), true);
+        ok = false;
+      } else {
+        var replies = (body && body.replies) || [];
+        for (var i = 0; i < replies.length; i++) {
+          try {
+            if (replies[i].type === 'file') { addFile(replies[i]); } else { addText(replies[i].body, false); }
+          } catch (e) { addSys('Não consegui mostrar uma resposta — tenta de novo.', true); }
+        }
+        if (!replies.length) { addSys('O coach não retornou nada — tenta de novo, por favor.', true); }
+      }
+    } catch (e) {
+      typing(false);
+      addSys('Sem conexão com o coach — verifica a internet e tenta de novo.', true);
+      ok = false;
+    }
+    typing(false);
+    sending = false;
+    $('send').disabled = false;
+    msg.disabled = false;
+    msg.focus();
+    return ok;
+  }
+
+  $('start').addEventListener('click', function () {
+    var p = digitsOnly($('phone').value);
+    var err = $('intro-error');
+    if (p.length < 10 || p.length > 15) {
+      err.textContent = 'Número estranho — manda com DDD, ex.: 5541999998888.';
+      err.hidden = false;
+      return;
+    }
+    err.hidden = true;
+    phone = p;
+    try { localStorage.setItem('demo.phone', phone); localStorage.setItem('demo.name', $('name').value.trim()); } catch (e) {}
+    intro.hidden = true;
+    $('header').hidden = false;
+    chat.hidden = false;
+    $('composer').hidden = false;
+    msg.focus();
+  });
+
+  $('phone').addEventListener('input', function () { this.value = digitsOnly(this.value); });
+  try {
+    var savedPhone = localStorage.getItem('demo.phone');
+    if (savedPhone) {
+      $('phone').value = savedPhone;
+      $('name').value = localStorage.getItem('demo.name') || '';
+    }
+  } catch (e) {}
+
+  $('send').addEventListener('click', function () {
+    var t = msg.value.trim();
+    if (!t) return;
+    msg.value = '';
+    send(t);
+  });
+  msg.addEventListener('keydown', function (ev) {
+    if (ev.key === 'Enter') {
+      ev.preventDefault();
+      var t = msg.value.trim();
+      if (!t) return;
+      msg.value = '';
+      send(t);
+    }
+  });
+})();
+</script>
+</body>
+</html>

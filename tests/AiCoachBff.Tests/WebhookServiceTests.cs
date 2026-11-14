@@ -20,7 +20,7 @@ public sealed class WebhookServiceTests
     {
         var ai = aiCoach ?? new Mock<IAiCoachClient>();
         var mt = meta ?? new Mock<IMetaClient>();
-        return new WebhookService(new DedupeCache(100), new UserGate(), ai.Object, mt.Object, options ?? Default(), NullLogger());
+        return new WebhookService(new DedupeCache(100), new UserGate(), ai.Object, mt.Object, options ?? Default(), new DemoOptions(), NullLogger());
     }
 
     private static BffOptions Default() => new()

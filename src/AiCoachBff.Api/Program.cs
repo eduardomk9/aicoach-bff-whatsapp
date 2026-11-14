@@ -8,12 +8,14 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.Configure<MetaOptions>(builder.Configuration.GetSection(MetaOptions.Section));
 builder.Services.Configure<AiCoachOptions>(builder.Configuration.GetSection(AiCoachOptions.Section));
 builder.Services.Configure<BffOptions>(builder.Configuration.GetSection(BffOptions.Section));
+builder.Services.Configure<DemoOptions>(builder.Configuration.GetSection(DemoOptions.Section));
 
 // As options cruas para os construtores dos clients (o DI dos typed clients
 // não injeta IOptions — injeta a classe).
 builder.Services.AddSingleton<MetaOptions>(sp => sp.GetRequiredService<IOptions<MetaOptions>>().Value);
 builder.Services.AddSingleton<AiCoachOptions>(sp => sp.GetRequiredService<IOptions<AiCoachOptions>>().Value);
 builder.Services.AddSingleton<BffOptions>(sp => sp.GetRequiredService<IOptions<BffOptions>>().Value);
+builder.Services.AddSingleton<DemoOptions>(sp => sp.GetRequiredService<IOptions<DemoOptions>>().Value);
 
 builder.Services.AddControllers();
 
@@ -46,6 +48,8 @@ builder.Services.AddSingleton(sp =>
 });
 // A fila por usuário é estado entre requests — SINGLETON (o WebhookService é scoped).
 builder.Services.AddSingleton<UserGate>();
+// Rajada do canal demo (janela fixa por IP) — estado entre requests, SINGLETON.
+builder.Services.AddSingleton<DemoLimiter>();
 builder.Services.AddScoped<IAiCoachClient, AiCoachClient>();
 builder.Services.AddScoped<WebhookService>();
 
@@ -76,6 +80,11 @@ if (!app.Environment.IsDevelopment())
 
 // Probe de saúde (Container Apps + verificação de deploy): anônimo, sem dependências.
 app.MapGet("/healthz", () => Results.Ok(new { status = "healthy" }));
+
+// Front demo (R20): wwwroot/index.html na raiz (a página do canal web provisório —
+// mesma origem do /demo, sem CORS e sem hospedagem apartada).
+app.UseDefaultFiles();
+app.UseStaticFiles();
 
 app.MapControllers();
 
