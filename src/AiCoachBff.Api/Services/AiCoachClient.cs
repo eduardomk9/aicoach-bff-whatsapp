@@ -159,16 +159,6 @@ public sealed class AiCoachClient : IAiCoachClient
             // Sem Authorization na resposta do envelope: {success, data:{accessToken, email, name}}.
             var payload = new { email = _options.ServiceEmail, password = _options.ServicePassword };
             using var response = await client.PostAsJsonAsync("/auth/login", payload, cancellationToken);
-            // Diagnóstico temporário (R20): a falha carrega status + corpo + server + URL.
-            if (!response.IsSuccessStatusCode)
-            {
-                var corpo = await response.Content.ReadAsStringAsync(cancellationToken);
-                var server = response.Headers.Server.Count > 0 ? response.Headers.Server.ToString() : "-";
-                var allowOk = response.Headers.TryGetValues("Allow", out var allowValues);
-                var allow = allowOk ? string.Join(',', allowValues) : "-";
-                throw new HttpRequestException(
-                    $"login={response.StatusCode} allow={allow} body={corpo[..Math.Min(160, corpo.Length)]} server={server} url={response.RequestMessage?.RequestUri} metodo={response.RequestMessage?.Method}");
-            }
             response.EnsureSuccessStatusCode();
 
             var body = await response.Content.ReadFromJsonAsync<ResultEnvelope<AuthData>>(Json(), cancellationToken);

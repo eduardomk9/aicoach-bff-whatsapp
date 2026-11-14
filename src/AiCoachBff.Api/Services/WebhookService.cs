@@ -156,12 +156,7 @@ public sealed class WebhookService(
         {
             // O usuário já não recebeu nada: resposta amigável + log completo.
             logger.LogError(exception, "Falha ao processar mensagem {MessageId} de {WaId}.", message.Id, waId);
-            // Diagnóstico temporário (R20 demo): quem está NA ALLOWLIST vê o detalhe
-            // técnico da falha da API no fim da resposta amigável.
-            var detalhe = demo.AllowedPhones.Contains(waId, StringComparer.Ordinal)
-                ? " [" + (exception.InnerException?.Message ?? exception.Message).Split('\n')[0].TrimEnd('\r') + "]"
-                : string.Empty;
-            await SendSilentlyAsync(waId, bff.FallbackErrorMessage + detalhe, sink);
+            await SendSilentlyAsync(waId, bff.FallbackErrorMessage, sink);
         }
     }
 
