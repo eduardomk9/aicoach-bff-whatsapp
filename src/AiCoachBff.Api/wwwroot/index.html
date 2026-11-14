@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#075e54">
-<title>AiCoach — Demo do coach</title>
+<title>Meu Treinador</title>
 <style>
   :root {
     --wa-green: #25d366;
@@ -152,17 +152,16 @@
 <body>
 <div id="app">
   <header [hidden] id="header" hidden>
-    <div class="avatar">A</div>
+    <div class="avatar">M</div>
     <div class="who">
-      <strong>AiCoach</strong>
+      <strong>Meu Treinador</strong>
       <div class="status" id="status">online</div>
     </div>
-    <div class="demo-chip">versão web provisória — WhatsApp oficial a caminho</div>
   </header>
 
   <section class="pane" id="intro">
-    <h1>Teste o coach do AiCoach</h1>
-    <p>Digite o número do seu WhatsApp (com DDD). Sem conta? Já te registra no provisório e te mostra o onboarding.</p>
+    <h1>Meu Treinador</h1>
+    <p>Teu treinador de treino e dieta, no seu WhatsApp. Digite o número (com DDD) e conversa.</p>
     <div class="field">
       <label for="phone">WhatsApp (com DDD)</label>
       <input id="phone" inputmode="tel" autocomplete="tel" placeholder="5541999998888">
@@ -294,7 +293,7 @@
   }
 
   function errorText(status, body) {
-    if (status === 403) return 'Acesso recusado — pede ao AiCoach o link com a chave.';
+    if (status === 403) return 'Acesso recusado — pede o link com a chave ao quem te indicou.';
     if (status === 404) return 'O canal demo está desligado agora — tenta de novo mais tarde.';
     var erro = body && body.error;
     return erro || 'Não consegui falar com o coach agora — tenta de novo em instantes.';
