@@ -76,6 +76,16 @@ if (!app.Environment.IsDevelopment())
     {
         throw new InvalidOperationException("Config incompleta fora de Development (AiCoach:ServicePassword vazio) — o login SERVICE falharia em loop.");
     }
+
+    // Chave do canal demo: se configurada, força mínima em Production (review R20).
+    // Chave curta é enumerável; vazia segue fail-closed (canal nem existe) — só
+    // rejeita chave FRACA configurada.
+    var demoOpts = app.Services.GetRequiredService<IOptions<DemoOptions>>().Value;
+    if (!string.IsNullOrEmpty(demoOpts.AccessKey) && demoOpts.AccessKey.Length < 20)
+    {
+        throw new InvalidOperationException(
+            "Demo:AccessKey configurada com menos de 20 caracteres em Production — chave fraca é enumerável. Gere uma chave longa aleatória ou deixe vazia (canal desligado).");
+    }
 }
 
 // Probe de saúde (Container Apps + verificação de deploy): anônimo, sem dependências.

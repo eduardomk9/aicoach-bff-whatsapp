@@ -69,7 +69,13 @@ Extras do canal demo (secrets ANTES das env `secretref:`):
   O dono lista o próprio `55<DDD+numero>`.
 
 Travas em vigor: 30 mensagens/15 min por IP (janela fixa), 3 turnos simultâneos no
-processo inteiro, texto de até 2000 caracteres, corpo de request até 64 KB.
+processo inteiro, texto de até 2000 caracteres, corpo de request até 64 KB. Boot
+fail-closed também exige força mínima (≥20 caracteres) quando a chave está configurada.
+
+Resíduos aceitos do review (baixos, provisório): com o canal desligado a página ainda
+abre e o primeiro envio recebe a frase honesta de canal desligado; turnos da demo que
+tocam sessão real (só números na allowlist) entram na API com `source=whatsapp`
+(follow-up: marcador de origem próprio).
 
 ## Rotina de troca de token da Meta
 
