@@ -41,11 +41,10 @@ jobs:
             az acr repository show-tags -n acraicoach3558 --repository aicoach-api -o tsv
             echo "=== TAGS aicoach-bff ==="
             az acr repository show-tags -n acraicoach3558 --repository aicoach-bff -o tsv
-            echo "=== aicoach-bff app json (imagem/env/rev) ==="
-            az containerapp show -n aicoach-bff -g rg-aicoach -o json | head -c 6000
-            echo ""
-            echo "=== aicoach-api app json (imagem/rev) ==="
-            az containerapp show -n aicoach-api -g rg-aicoach -o json | head -c 6000
+            echo "=== BFF: imagem/rev/status (SEM dados pessoais) ==="
+            az containerapp show -n aicoach-bff -g rg-aicoach -o json --query "{imagem: properties.template.containers[0].image, rev: properties.latestRevisionName, status: properties.runningStatus}" -o json
+            echo "=== API: imagem/rev/status ==="
+            az containerapp show -n aicoach-api -g rg-aicoach -o json --query "{imagem: properties.template.containers[0].image, rev: properties.latestRevisionName, status: properties.runningStatus}" -o json
           } > estado-apps.txt 2>&1
 
       - name: Comita os logs de volta no repo
