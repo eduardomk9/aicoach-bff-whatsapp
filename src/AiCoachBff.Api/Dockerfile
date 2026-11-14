@@ -15,4 +15,5 @@ WORKDIR /app
 ENV ASPNETCORE_HTTP_PORTS=8080
 EXPOSE 8080
 COPY --from=build /app/publish .
+ENTRYPOINT ["dotnet", "AiCoachBff.Api.dll"]
 USER $APP_UID
