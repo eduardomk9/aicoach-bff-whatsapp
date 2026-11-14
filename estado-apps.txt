@@ -1,26 +1,40 @@
 === TAGS aicoach-api ===
+2b8d975c503fbd61284f547e69e852e003d7f00c
 3d5636180e02739129dbb92c763eac888081850f
+461e326aba799bb73df51991e98563f3729e3508
 4d6966ebf2c0bdc174dd82847f6cd7fcb8a69802
+55083d4c8dee50e5ebad368bf8cdfe30c95bd461
 7767e3f0bb92d7cf46e476ed7c617daeea06863e
+9620bd1def0a05c471a7e5e9e5fca401a8b525de
+994b5467dc28ef13079da3ce38046c878e67869b
 v1
 v2
 === TAGS aicoach-bff ===
+182814fbbdde23c868115fde014d1bf7df75b4b7
+18ee05007010b4f32a28146114874078f68e286b
 38804617f4a11e7a750f98a0eaf065176ba19746
 3af0eb06482fd2b6489925487c371d5ebf85efb2
+4337324ff2c9dbc18457d341c01ca00d36897518
 7662da05f6e71b280cdafbf3fec3f7030eacd332
+76685dc2928280591b774fff66b5ffcb3dbb895c
+817fb21c9e08fb500881d3f123b231ec473cfab4
+8880d994da9c8c1fb774443abe8b26b6a57a0ba2
 b1dba80f34242b734fe65cb9297d22bd8d350dc4
+c47ef54e37eec679cf661032bfdcc657d59b3fb7
+cf9095a8782fbfbd037eae70f98d35bcddd78484
 db05fa444a2a885e7bffb743b5de1860dd548438
 e0d9e968ad2748d45b1bf9278e01edbe6c98ae4e
+f987a8c72c00afcddd6ed144d9ddf69944c0b4d7
 v1
 === BFF: imagem/rev/status (SEM dados pessoais) ===
 {
-  "imagem": "acraicoach3558.azurecr.io/aicoach-bff:38804617f4a11e7a750f98a0eaf065176ba19746",
-  "rev": "aicoach-bff--0000007",
+  "imagem": "acraicoach3558.azurecr.io/aicoach-bff:cf9095a8782fbfbd037eae70f98d35bcddd78484",
+  "rev": "aicoach-bff--0000018",
   "status": "Running"
 }
 === API: imagem/rev/status ===
 {
-  "imagem": "acraicoach3558.azurecr.io/aicoach-api:4d6966ebf2c0bdc174dd82847f6cd7fcb8a69802",
-  "rev": "aicoach-api--0000003",
+  "imagem": "acraicoach3558.azurecr.io/aicoach-api:55083d4c8dee50e5ebad368bf8cdfe30c95bd461",
+  "rev": "aicoach-api--0000007",
   "status": "Running"
 }

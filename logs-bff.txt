@@ -1,10 +1,59 @@
-{"TimeStamp": "2026-11-14T14:18:30.70834", "Log": "Connecting to the container 'aicoach-bff'..."}
-{"TimeStamp": "2026-11-14T14:18:30.78427", "Log": "Successfully Connected to container: 'aicoach-bff' [Revision: 'aicoach-bff--0000007', Replica: 'aicoach-bff--0000007-699d66b98c-4j7sx']"}
-{"TimeStamp": "2026-11-14T14:18:19.241869+00:00", "Log": "F info: Microsoft.Hosting.Lifetime[14]"}
-{"TimeStamp": "2026-11-14T14:18:19.2419785+00:00", "Log": "F       Now listening on: http://[::]:8080"}
-{"TimeStamp": "2026-11-14T14:18:19.2433821+00:00", "Log": "F info: Microsoft.Hosting.Lifetime[0]"}
-{"TimeStamp": "2026-11-14T14:18:19.2433982+00:00", "Log": "F       Application started. Press Ctrl+C to shut down."}
-{"TimeStamp": "2026-11-14T14:18:19.2440836+00:00", "Log": "F info: Microsoft.Hosting.Lifetime[0]"}
-{"TimeStamp": "2026-11-14T14:18:19.2440956+00:00", "Log": "F       Hosting environment: Production"}
-{"TimeStamp": "2026-11-14T14:18:19.2441429+00:00", "Log": "F info: Microsoft.Hosting.Lifetime[0]"}
-{"TimeStamp": "2026-11-14T14:18:19.2441464+00:00", "Log": "F       Content root path: /app"}
+{"TimeStamp": "2026-11-14T23:11:15.31415", "Log": "Connecting to the container 'aicoach-bff'..."}
+{"TimeStamp": "2026-11-14T23:11:15.392", "Log": "Successfully Connected to container: 'aicoach-bff' [Revision: 'aicoach-bff--0000018', Replica: 'aicoach-bff--0000018-78bfc76756-9k5q4']"}
+{"TimeStamp": "2026-11-14T22:45:36.5545189+00:00", "Log": "F info: Microsoft.Hosting.Lifetime[14]"}
+{"TimeStamp": "2026-11-14T22:45:36.5545806+00:00", "Log": "F       Now listening on: http://[::]:8080"}
+{"TimeStamp": "2026-11-14T22:45:36.5567328+00:00", "Log": "F info: Microsoft.Hosting.Lifetime[0]"}
+{"TimeStamp": "2026-11-14T22:45:36.5567591+00:00", "Log": "F       Application started. Press Ctrl+C to shut down."}
+{"TimeStamp": "2026-11-14T22:45:36.5571712+00:00", "Log": "F info: Microsoft.Hosting.Lifetime[0]"}
+{"TimeStamp": "2026-11-14T22:45:36.5571857+00:00", "Log": "F       Hosting environment: Production"}
+{"TimeStamp": "2026-11-14T22:45:36.5571927+00:00", "Log": "F info: Microsoft.Hosting.Lifetime[0]"}
+{"TimeStamp": "2026-11-14T22:45:36.5571951+00:00", "Log": "F       Content root path: /app"}
+{"TimeStamp": "2026-11-14T23:09:34.2854744+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.LogicalHandler[100]"}
+{"TimeStamp": "2026-11-14T23:09:34.2855245+00:00", "Log": "F       Start processing HTTP request POST https://aicoach-api.internal.yellowpond-bc313828.brazilsouth.azurecontainerapps.io/auth/login"}
+{"TimeStamp": "2026-11-14T23:09:34.2864199+00:00", "Log": "F info: System.Net.Http.HttpClient.aicoach.ClientHandler[100]"}
+{"TimeStamp": "2026-11-14T23:09:34.286452+00:00", "Log": "F       Sending HTTP request POST https://aicoach-api.internal.yellowpond-bc313828.brazilsouth.azurecontainerapps.io/auth/login"}
+{"TimeStamp": "2026-11-14T23:10:04.3134886+00:00", "Log": "F fail: Microsoft.AspNetCore.Server.Kestrel[13]"}
+{"TimeStamp": "2026-11-14T23:10:04.3135285+00:00", "Log": "F       Connection id \"0HNQ2K405PLA8\", Request id \"0HNQ2K405PLA8:00000001\": An unhandled exception was thrown by the application."}
+{"TimeStamp": "2026-11-14T23:10:04.3135403+00:00", "Log": "F       System.Threading.Tasks.TaskCanceledException: The request was canceled due to the configured HttpClient.Timeout of 30 seconds elapsing."}
+{"TimeStamp": "2026-11-14T23:10:04.313542+00:00", "Log": "F        ---> System.TimeoutException: The operation was canceled."}
+{"TimeStamp": "2026-11-14T23:10:04.3135434+00:00", "Log": "F        ---> System.Threading.Tasks.TaskCanceledException: The operation was canceled."}
+{"TimeStamp": "2026-11-14T23:10:04.3135447+00:00", "Log": "F        ---> System.IO.IOException: Unable to read data from the transport connection: Operation canceled."}
+{"TimeStamp": "2026-11-14T23:10:04.3135481+00:00", "Log": "F        ---> System.Net.Sockets.SocketException (125): Operation canceled"}
+{"TimeStamp": "2026-11-14T23:10:04.3135493+00:00", "Log": "F          --- End of inner exception stack trace ---"}
+{"TimeStamp": "2026-11-14T23:10:04.3135505+00:00", "Log": "F          at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.ThrowException(SocketError error, CancellationToken cancellationToken)"}
+{"TimeStamp": "2026-11-14T23:10:04.3135517+00:00", "Log": "F          at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.System.Threading.Tasks.Sources.IValueTaskSource<System.Int32>.GetResult(Int16 token)"}
+{"TimeStamp": "2026-11-14T23:10:04.3136228+00:00", "Log": "F          at System.Net.Security.SslStream.EnsureFullTlsFrameAsync[TIOAdapter](CancellationToken cancellationToken, Int32 estimatedSize)"}
+{"TimeStamp": "2026-11-14T23:10:04.3136272+00:00", "Log": "F          at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)"}
+{"TimeStamp": "2026-11-14T23:10:04.3136298+00:00", "Log": "F          at System.Net.Security.SslStream.ReadAsyncInternal[TIOAdapter](Memory`1 buffer, CancellationToken cancellationToken)"}
+{"TimeStamp": "2026-11-14T23:10:04.3136335+00:00", "Log": "F          at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)"}
+{"TimeStamp": "2026-11-14T23:10:04.3136356+00:00", "Log": "F          at System.Net.Http.HttpConnection.InitialFillAsync(Boolean async)"}
+{"TimeStamp": "2026-11-14T23:10:04.3136377+00:00", "Log": "F          at System.Net.Http.HttpConnection.SendAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)"}
+{"TimeStamp": "2026-11-14T23:10:04.3136397+00:00", "Log": "F          --- End of inner exception stack trace ---"}
+{"TimeStamp": "2026-11-14T23:10:04.3136415+00:00", "Log": "F          at System.Net.Http.HttpConnection.SendAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)"}
+{"TimeStamp": "2026-11-14T23:10:04.3136706+00:00", "Log": "F          at System.Net.Http.HttpConnectionPool.SendWithVersionDetectionAndRetryAsync(HttpRequestMessage request, Boolean async, Boolean doRequestAuth, CancellationToken cancellationToken)"}
+{"TimeStamp": "2026-11-14T23:10:04.3136776+00:00", "Log": "F          at System.Net.Http.DiagnosticsHandler.SendAsyncCore(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)"}
+{"TimeStamp": "2026-11-14T23:10:04.3136817+00:00", "Log": "F          at System.Net.Http.RedirectHandler.SendAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)"}
+{"TimeStamp": "2026-11-14T23:10:04.3136851+00:00", "Log": "F          at Microsoft.Extensions.Http.Logging.LoggingHttpMessageHandler.<SendCoreAsync>g__Core|5_0(HttpRequestMessage request, Boolean useAsync, CancellationToken cancellationToken)"}
+{"TimeStamp": "2026-11-14T23:10:04.3136872+00:00", "Log": "F          at Microsoft.Extensions.Http.Logging.LoggingScopeHttpMessageHandler.<SendCoreAsync>g__Core|5_0(HttpRequestMessage request, Boolean useAsync, CancellationToken cancellationToken)"}
+{"TimeStamp": "2026-11-14T23:10:04.3136984+00:00", "Log": "F          at System.Net.Http.HttpClient.<SendAsync>g__Core|83_0(HttpRequestMessage request, HttpCompletionOption completionOption, CancellationTokenSource cts, Boolean disposeCts, CancellationTokenSource pendingRequestsCts, CancellationToken originalCancellationToken)"}
+{"TimeStamp": "2026-11-14T23:10:04.3137042+00:00", "Log": "F          --- End of inner exception stack trace ---"}
+{"TimeStamp": "2026-11-14T23:10:04.3137069+00:00", "Log": "F          --- End of inner exception stack trace ---"}
+{"TimeStamp": "2026-11-14T23:10:04.3137835+00:00", "Log": "F          at System.Net.Http.HttpClient.HandleFailure(Exception e, Boolean telemetryStarted, HttpResponseMessage response, CancellationTokenSource cts, CancellationToken cancellationToken, CancellationTokenSource pendingRequestsCts)"}
+{"TimeStamp": "2026-11-14T23:10:04.3138061+00:00", "Log": "F          at System.Net.Http.HttpClient.<SendAsync>g__Core|83_0(HttpRequestMessage request, HttpCompletionOption completionOption, CancellationTokenSource cts, Boolean disposeCts, CancellationTokenSource pendingRequestsCts, CancellationToken originalCancellationToken)"}
+{"TimeStamp": "2026-11-14T23:10:04.3138093+00:00", "Log": "F          at AiCoachBff.Api.Services.AiCoachClient.GetTokenAsync(CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/AiCoachClient.cs:line 167"}
+{"TimeStamp": "2026-11-14T23:10:04.3138116+00:00", "Log": "F          at AiCoachBff.Api.Services.AiCoachClient.LookupUserAsync(String phone, CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/AiCoachClient.cs:line 59"}
+{"TimeStamp": "2026-11-14T23:10:04.313851+00:00", "Log": "F          at AiCoachBff.Api.Services.WebhookService.BloqueadoSemAcessoAsync(String waId, CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/WebhookService.cs:line 115"}
+{"TimeStamp": "2026-11-14T23:10:04.3138572+00:00", "Log": "F          at AiCoachBff.Api.Services.WebhookService.SimulateAsync(InboundMessage message, String profileName, CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Services/WebhookService.cs:line 86"}
+{"TimeStamp": "2026-11-14T23:10:04.3138608+00:00", "Log": "F          at AiCoachBff.Api.Controllers.DemoController.Message(DemoRequest request, CancellationToken cancellationToken) in /src/src/AiCoachBff.Api/Controllers/DemoController.cs:line 104"}
+{"TimeStamp": "2026-11-14T23:10:04.3138628+00:00", "Log": "F          at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)"}
+{"TimeStamp": "2026-11-14T23:10:04.3138652+00:00", "Log": "F          at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)"}
+{"TimeStamp": "2026-11-14T23:10:04.313892+00:00", "Log": "F          at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)"}
+{"TimeStamp": "2026-11-14T23:10:04.3138995+00:00", "Log": "F          at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)"}
+{"TimeStamp": "2026-11-14T23:10:04.3139031+00:00", "Log": "F          at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)"}
+{"TimeStamp": "2026-11-14T23:10:04.3139053+00:00", "Log": "F          at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)"}
+{"TimeStamp": "2026-11-14T23:10:04.3139075+00:00", "Log": "F          at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)"}
+{"TimeStamp": "2026-11-14T23:10:04.3139112+00:00", "Log": "F          at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)"}
+{"TimeStamp": "2026-11-14T23:10:04.3139251+00:00", "Log": "F          at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)"}
+{"TimeStamp": "2026-11-14T23:10:04.31394+00:00", "Log": "F          at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)"}
+{"TimeStamp": "2026-11-14T23:10:04.3139428+00:00", "Log": "F          at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)"}
+{"TimeStamp": "2026-11-14T23:10:04.3139448+00:00", "Log": "F          at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.HttpProtocol.ProcessRequests[TContext](IHttpApplication`1 application)"}
