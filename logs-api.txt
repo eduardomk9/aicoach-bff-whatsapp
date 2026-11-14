@@ -1,5 +1,5 @@
-{"TimeStamp": "2026-11-14T14:16:39.10571", "Log": "Connecting to the container 'aicoach-api'..."}
-{"TimeStamp": "2026-11-14T14:16:39.13465", "Log": "Successfully Connected to container: 'aicoach-api' [Revision: 'aicoach-api--0000003', Replica: 'aicoach-api--0000003-76bdd76f4d-tc4nj']"}
+{"TimeStamp": "2026-11-14T14:18:25.80603", "Log": "Connecting to the container 'aicoach-api'..."}
+{"TimeStamp": "2026-11-14T14:18:25.83293", "Log": "Successfully Connected to container: 'aicoach-api' [Revision: 'aicoach-api--0000003', Replica: 'aicoach-api--0000003-76bdd76f4d-tc4nj']"}
 {"TimeStamp": "2026-11-14T13:23:40.6335268+00:00", "Log": "F warn: Microsoft.AspNetCore.DataProtection.Repositories.FileSystemXmlRepository[60]"}
 {"TimeStamp": "2026-11-14T13:23:40.6335854+00:00", "Log": "F       Storing keys in a directory '/home/app/.aspnet/DataProtection-Keys' that may not be persisted outside of the container. Protected data will be unavailable when container is destroyed. For more information go to https://aka.ms/aspnet/dataprotectionwarning"}
 {"TimeStamp": "2026-11-14T13:23:40.6486667+00:00", "Log": "F warn: Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager[35]"}
