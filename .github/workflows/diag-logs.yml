@@ -34,11 +34,25 @@ jobs:
           az containerapp logs show -n aicoach-api -g rg-aicoach --tail 200 > logs-api.txt || echo "FALHA_API" > logs-api.txt
           az containerapp logs show -n aicoach-bff -g rg-aicoach --tail 200 > logs-bff.txt || echo "FALHA_BFF" > logs-bff.txt
 
+      - name: Estado dos apps e do ACR (evidencia via runner)
+        run: |
+          {
+            echo "=== TAGS aicoach-api ==="
+            az acr repository show-tags -n acraicoach3558 --repository aicoach-api -o tsv
+            echo "=== TAGS aicoach-bff ==="
+            az acr repository show-tags -n acraicoach3558 --repository aicoach-bff -o tsv
+            echo "=== aicoach-bff app json (imagem/env/rev) ==="
+            az containerapp show -n aicoach-bff -g rg-aicoach -o json | head -c 6000
+            echo ""
+            echo "=== aicoach-api app json (imagem/rev) ==="
+            az containerapp show -n aicoach-api -g rg-aicoach -o json | head -c 6000
+          } > estado-apps.txt 2>&1
+
       - name: Comita os logs de volta no repo
         run: |
           git config user.email "diag@runner.local"
           git config user.name "diag-runner"
-          git add logs-api.txt logs-bff.txt
+          git add logs-api.txt logs-bff.txt estado-apps.txt
           git rm --cached diag-logs.flag || true
           if git diff --cached --quiet; then
             echo "NADA_A_COMITAR"
