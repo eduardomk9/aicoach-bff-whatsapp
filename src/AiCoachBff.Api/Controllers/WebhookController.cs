@@ -97,12 +97,15 @@ public sealed class WebhookController(
         return Ok("EVENT_RECEIVED");
     }
 
-    /// <summary>Assinatura obrigatória quando AppSecret está configurado; vazio = dev.</summary>
+    /// <summary>Assinatura obrigatória quando AppSecret está configurado; vazio = dev.
+    /// O boot fail-closed (Program.cs) proíbe o vazio fora de Development — aqui fica
+    /// só o ambiente de dev, e o Critical garante que NINGUÉM passe por cima sem saber.</summary>
     private bool SignatureOk(string raw)
     {
         var appSecret = metaOptions.Value.AppSecret;
         if (string.IsNullOrEmpty(appSecret))
         {
+            logger.LogCritical("Assinatura do webhook DESLIGADA (Meta:AppSecret vazio) — POST aceito SEM verificação de identidade. Configure o App Secret antes de publicar.");
             return true;
         }
 

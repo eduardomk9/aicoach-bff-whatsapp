@@ -11,11 +11,11 @@ public interface IMetaClient
     /// <summary>Manda mensagem de texto (divide se passar de 4096 chars).</summary>
     Task SendTextAsync(string waId, string body, CancellationToken cancellationToken);
 
-    /// <summary>Manda documento nativo (PDF) pelo media_id já subido. Vazio no arquivo.</summary>
-    Task SendDocumentAsync(string waId, string mediaId, string fileName, string caption, CancellationToken cancellationToken);
+    /// <summary>Manda documento nativo (PDF) pelo media_id já subido. Caption nula/vazia não vai no payload.</summary>
+    Task SendDocumentAsync(string waId, string mediaId, string fileName, string? caption, CancellationToken cancellationToken);
 
     /// <summary>Manda imagem nativa pelo media_id já subido.</summary>
-    Task SendImageAsync(string waId, string mediaId, string caption, CancellationToken cancellationToken);
+    Task SendImageAsync(string waId, string mediaId, string? caption, CancellationToken cancellationToken);
 
     /// <summary>Sube bytes de mídia e devolve o media_id do Graph.</summary>
     Task<string> UploadMediaAsync(byte[] content, string contentType, CancellationToken cancellationToken);
@@ -34,6 +34,10 @@ public sealed partial class MetaClient : IMetaClient
 
     // WhatsApp text body aceita até 4096 chars por mensagem (Graph rejeita acima).
     private const int MaxTextLength = 4096;
+
+    // Graph rejeita caption acima de 1024 chars (contrato docs\whatsapp-pdf.md:58 da
+    // API) — rejeição DEPOIS do upload sucedido perderia o anexo pago e o texto inteiro.
+    public const int MaxCaptionLength = 1024;
 
     private readonly HttpClient _http;
     private readonly MetaOptions _meta;
@@ -68,15 +72,23 @@ public sealed partial class MetaClient : IMetaClient
         }
     }
 
-    public async Task SendDocumentAsync(string waId, string mediaId, string fileName, string caption, CancellationToken cancellationToken)
+    public async Task SendDocumentAsync(string waId, string mediaId, string fileName, string? caption, CancellationToken cancellationToken)
     {
-        var payload = new { messaging_product = "whatsapp", to = waId, type = "document", document = new { id = mediaId, filename = fileName, caption = caption } };
+        var cap = CapCaption(caption);
+        object document = string.IsNullOrEmpty(cap)
+            ? new { id = mediaId, filename = fileName }
+            : new { id = mediaId, filename = fileName, caption = cap };
+        var payload = new { messaging_product = "whatsapp", to = waId, type = "document", document };
         await PostJsonAsync(payload, cancellationToken);
     }
 
-    public async Task SendImageAsync(string waId, string mediaId, string caption, CancellationToken cancellationToken)
+    public async Task SendImageAsync(string waId, string mediaId, string? caption, CancellationToken cancellationToken)
     {
-        var payload = new { messaging_product = "whatsapp", to = waId, type = "image", image = new { id = mediaId, caption = caption } };
+        var cap = CapCaption(caption);
+        object image = string.IsNullOrEmpty(cap)
+            ? new { id = mediaId }
+            : new { id = mediaId, caption = cap };
+        var payload = new { messaging_product = "whatsapp", to = waId, type = "image", image };
         await PostJsonAsync(payload, cancellationToken);
     }
 
@@ -110,6 +122,27 @@ public sealed partial class MetaClient : IMetaClient
         return "sha256=" + Convert.ToHexString(hmac.ComputeHash(body)).ToLowerInvariant();
     }
 
+    /// <summary>
+    /// Clamps da caption no limite do Graph (1024): corta em fronteira segura de par
+    /// surrogado (emoji) antes de anexar "…". É aqui, na fronteira BFF→Graph, que o
+    /// contrato é imposto — cobre document e imagem de uma vez. Nulo/vazio passa.
+    /// </summary>
+    public static string? CapCaption(string? caption)
+    {
+        if (string.IsNullOrEmpty(caption) || caption.Length <= MaxCaptionLength)
+        {
+            return caption;
+        }
+
+        var cut = MaxCaptionLength - 1; // espaço para o "…" (o sufixo conta no total)
+        if (char.IsHighSurrogate(caption[cut - 1]))
+        {
+            cut--; // o par (high+low) ia ficar rachado na costura
+        }
+
+        return string.Concat(caption.AsSpan(0, cut).TrimEnd(), "…");
+    }
+
     private async Task PostJsonAsync(object payload, CancellationToken cancellationToken)
     {
         using var request = new HttpRequestMessage(HttpMethod.Post, MessagesUrl)
@@ -126,7 +159,11 @@ public sealed partial class MetaClient : IMetaClient
         // entrega fora de ordem raramente; sem delay a resposta é igual).
     }
 
-    private static IEnumerable<string> SplitText(string body)
+    /// <summary>
+    /// Fatia em blocos de ≤4096 chars SEM rachar par surrogado na costura (emoji com o
+    /// corte em cima da costura viraria � na conversão JSON — mojibake visível).
+    /// </summary>
+    public static IEnumerable<string> SplitText(string body)
     {
         if (body.Length <= MaxTextLength)
         {
@@ -134,9 +171,17 @@ public sealed partial class MetaClient : IMetaClient
             yield break;
         }
 
-        foreach (var chunk in body.Chunk(MaxTextLength))
+        var offset = 0;
+        while (offset < body.Length)
         {
-            yield return new string(chunk);
+            var size = Math.Min(MaxTextLength, body.Length - offset);
+            if (size >= 2 && offset + size < body.Length && char.IsHighSurrogate(body[offset + size - 1]))
+            {
+                size--; // o pair (high+low) passa inteiro pro bloco seguinte
+            }
+
+            yield return body.Substring(offset, size);
+            offset += size;
         }
     }
 

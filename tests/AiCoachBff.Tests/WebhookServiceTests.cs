@@ -20,7 +20,7 @@ public sealed class WebhookServiceTests
     {
         var ai = aiCoach ?? new Mock<IAiCoachClient>();
         var mt = meta ?? new Mock<IMetaClient>();
-        return new WebhookService(new DedupeCache(100), ai.Object, mt.Object, options ?? Default(), NullLogger());
+        return new WebhookService(new DedupeCache(100), new UserGate(), ai.Object, mt.Object, options ?? Default(), NullLogger());
     }
 
     private static BffOptions Default() => new()
@@ -199,5 +199,133 @@ public sealed class WebhookServiceTests
         act.Should().NotThrow();
         await Task.Delay(300); // dá chance do background terminar (log do catch)
         meta.Verify(m => m.SendTextAsync("5541999998888", "fallback", It.IsAny<CancellationToken>()), Times.Once);
+    }
+
+    [Fact]
+    public async Task MultiPedido_DoisLinks_DoisDocumentos_CaptionSoNoPrimeiro()
+    {
+        var ai = new Mock<IAiCoachClient>();
+        ai.Setup(c => c.LookupUserAsync("5541999998888", It.IsAny<CancellationToken>())).ReturnsAsync(123462);
+        ai.Setup(c => c.SendMessageAsync(123462, It.IsAny<string>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync("PDF do cronograma pronto: /chat/media/media-aaa (válido por 24h).\n\nRelatório de outubro pronto: /chat/media/media-bbb (válido por 24h).");
+        ai.Setup(c => c.DownloadMediaAsync("media-aaa", It.IsAny<CancellationToken>()))
+            .ReturnsAsync(new MediaDownload(new byte[] { 1 }, "application/pdf", "Cronograma.pdf"));
+        ai.Setup(c => c.DownloadMediaAsync("media-bbb", It.IsAny<CancellationToken>()))
+            .ReturnsAsync(new MediaDownload(new byte[] { 2 }, "application/pdf", "Relatorio.pdf"));
+
+        var files = new List<string>();
+        var captions = new List<string?>();
+        var meta = new Mock<IMetaClient>();
+        meta.Setup(m => m.UploadMediaAsync(It.IsAny<byte[]>(), "application/pdf", It.IsAny<CancellationToken>()))
+            .ReturnsAsync("graph-1");
+        meta.Setup(m => m.SendDocumentAsync("5541999998888", "graph-1", It.IsAny<string>(), It.IsAny<string>(), It.IsAny<CancellationToken>()))
+            .Callback<string, string, string, string?, CancellationToken>((_, _, file, cap, _) => { files.Add(file); captions.Add(cap); })
+            .Returns(Task.CompletedTask);
+        var service = Build(aiCoach: ai, meta: meta);
+
+        await service.HandleAsync(TextMessage(), profileName: null);
+
+        files.Should().Equal("Cronograma.pdf", "Relatorio.pdf");
+        captions.Should().HaveCount(2);
+        captions[0].Should().Be("PDF do cronograma pronto: (válido por 24h).\n\nRelatório de outubro pronto: (válido por 24h).");
+        captions[1].Should().BeNull();
+    }
+
+    [Fact]
+    public async Task EntregaMidiaFalha_DegradaParaTextoSemLink_FallbackGeralNunca()
+    {
+        var ai = new Mock<IAiCoachClient>();
+        ai.Setup(c => c.LookupUserAsync("5541999998888", It.IsAny<CancellationToken>())).ReturnsAsync(123462);
+        ai.Setup(c => c.SendMessageAsync(123462, It.IsAny<string>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync("PDF do cronograma pronto: /chat/media/media-expirou (válido por 24h).");
+        ai.Setup(c => c.DownloadMediaAsync("media-expirou", It.IsAny<CancellationToken>()))
+            .ThrowsAsync(new HttpRequestException("404 expirado"));
+        var meta = new Mock<IMetaClient>();
+        meta.Setup(m => m.SendTextAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<CancellationToken>()))
+            .Returns(Task.CompletedTask);
+        var service = Build(aiCoach: ai, meta: meta);
+
+        var act = () => service.HandleAsync(TextMessage(), profileName: null);
+
+        await act.Should().NotThrowAsync();
+        meta.Verify(m => m.SendTextAsync("5541999998888", "PDF do cronograma pronto: (válido por 24h).", It.IsAny<CancellationToken>()), Times.Once);
+        meta.Verify(m => m.SendTextAsync(It.IsAny<string>(), "fallback", It.IsAny<CancellationToken>()), Times.Never);
+    }
+
+    [Fact]
+    public async Task EntregaMidiaFalha_ReplySoOLink_FraseHonestaDeArquivo()
+    {
+        var ai = new Mock<IAiCoachClient>();
+        ai.Setup(c => c.LookupUserAsync("5541999998888", It.IsAny<CancellationToken>())).ReturnsAsync(123462);
+        ai.Setup(c => c.SendMessageAsync(123462, It.IsAny<string>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync("/chat/media/media-expirou");
+        ai.Setup(c => c.DownloadMediaAsync("media-expirou", It.IsAny<CancellationToken>()))
+            .ThrowsAsync(new HttpRequestException("404 expirado"));
+        var meta = new Mock<IMetaClient>();
+        meta.Setup(m => m.SendTextAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<CancellationToken>()))
+            .Returns(Task.CompletedTask);
+        var service = Build(aiCoach: ai, meta: meta);
+
+        var act = () => service.HandleAsync(TextMessage(), profileName: null);
+
+        await act.Should().NotThrowAsync();
+        meta.Verify(m => m.SendTextAsync("5541999998888", "O arquivo não pôde ser entregue agora — me pede de novo que eu refaço.", It.IsAny<CancellationToken>()), Times.Once);
+        meta.Verify(m => m.SendTextAsync(It.IsAny<string>(), "fallback", It.IsAny<CancellationToken>()), Times.Never);
+    }
+
+    [Fact]
+    public async Task ReplyLongaComLink_CaptionCapsA1024ComReticencias()
+    {
+        var ai = new Mock<IAiCoachClient>();
+        ai.Setup(c => c.LookupUserAsync("5541999998888", It.IsAny<CancellationToken>())).ReturnsAsync(123462);
+        ai.Setup(c => c.SendMessageAsync(123462, It.IsAny<string>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync(new string('x', 1300) + " /chat/media/media-f836 (válido por 24h).");
+        ai.Setup(c => c.DownloadMediaAsync("media-f836", It.IsAny<CancellationToken>()))
+            .ReturnsAsync(new MediaDownload(new byte[] { 1 }, "application/pdf", "Relatorio.pdf"));
+
+        string? passada = null;
+        var meta = new Mock<IMetaClient>();
+        meta.Setup(m => m.UploadMediaAsync(It.IsAny<byte[]>(), "application/pdf", It.IsAny<CancellationToken>()))
+            .ReturnsAsync("graph-1");
+        meta.Setup(m => m.SendDocumentAsync("5541999998888", "graph-1", It.IsAny<string>(), It.IsAny<string>(), It.IsAny<CancellationToken>()))
+            .Callback<string, string, string, string?, CancellationToken>((_, _, _, cap, _) => passada = cap)
+            .Returns(Task.CompletedTask);
+        var service = Build(aiCoach: ai, meta: meta);
+
+        await service.HandleAsync(TextMessage(), profileName: null);
+
+        passada.Should().NotBeNull();
+        passada!.Length.Should().BeLessThanOrEqualTo(1024);
+        passada.Should().EndWith("…");
+    }
+
+    [Fact]
+    public async Task RajadaMesmoUsuario_Serializa_UmTurnoDeCadaVez()
+    {
+        var ativos = 0;
+        var maximo = 0;
+        var ai = new Mock<IAiCoachClient>();
+        ai.Setup(c => c.LookupUserAsync(It.IsAny<string>(), It.IsAny<CancellationToken>())).ReturnsAsync(10);
+        ai.Setup(c => c.SendMessageAsync(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<CancellationToken>()))
+            .Returns(async (int _, string _, CancellationToken _) =>
+            {
+                var n = Interlocked.Increment(ref ativos);
+                maximo = Math.Max(maximo, n);
+                await Task.Delay(120);
+                Interlocked.Decrement(ref ativos);
+                return "ok";
+            });
+        var meta = new Mock<IMetaClient>();
+        meta.Setup(m => m.SendTextAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<CancellationToken>()))
+            .Returns(Task.CompletedTask);
+        var service = Build(aiCoach: ai, meta: meta);
+
+        service.Enqueue(TextMessage("treino de hj", id: "wamid.a"), null);
+        await Task.Delay(50); // a 2ª chega DENTRO da espera do LLM da 1ª (caso normal da rajada)
+        service.Enqueue(TextMessage("e a dieta?", id: "wamid.b"), null);
+        await Task.Delay(900);
+
+        maximo.Should().Be(1);
+        meta.Verify(m => m.SendTextAsync(It.IsAny<string>(), "ok", It.IsAny<CancellationToken>()), Times.Exactly(2));
     }
 }
