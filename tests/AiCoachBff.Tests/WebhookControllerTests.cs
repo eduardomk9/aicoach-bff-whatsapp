@@ -39,7 +39,7 @@ public sealed class WebhookControllerTests(WebApplicationFactory<global::Program
     {
         var aiCoach = new Mock<IAiCoachClient>();
         aiCoach.Setup(c => c.LookupUserAsync("5541999998888", It.IsAny<CancellationToken>()))
-            .ReturnsAsync((int?)null);
+            .ReturnsAsync(new AiCoachBff.Api.Services.LookupOutcome(null, false, false));
         aiCoach.Setup(c => c.CreateLeadAsync("5541999998888", "Eduardo", It.IsAny<CancellationToken>()))
             .ReturnsAsync(7);
         var meta = new Mock<IMetaClient>();

@@ -6,11 +6,16 @@ namespace AiCoachBff.Api.Services;
 
 public sealed record MediaDownload(byte[] Content, string ContentType, string? FileName);
 
+/// <summary>Saída do lookup: Known=false = sem usuário (gate de lead); Allowed =
+/// Users.IsAllowed (o gate do acesso — R20 admin, o estado mora no banco).</summary>
+public sealed record LookupOutcome(int? UserId, bool Known, bool Allowed);
+
 /// <summary>Contrato do cliente da API AiCoach. Mockável nos testes.</summary>
 public interface IAiCoachClient
 {
-    /// <summary>Id SQL do usuário pelo telefone da origem (wa_id canônico). Nulo = sem usuário (gate de lead).</summary>
-    Task<int?> LookupUserAsync(string phone, CancellationToken cancellationToken);
+    /// <summary>Lookup pelo telefone da origem (wa_id canônico): Known=false = sem usuário
+    /// (gate de lead); Allowed = Users.IsAllowed (o gate do acesso — R20 admin, estado no banco).</summary>
+    Task<LookupOutcome> LookupUserAsync(string phone, CancellationToken cancellationToken);
 
     /// <summary>Registra o lead pendente de pagamento (idempotente pela API).</summary>
     Task<int> CreateLeadAsync(string phone, string? name, CancellationToken cancellationToken);
@@ -49,7 +54,7 @@ public sealed class AiCoachClient : IAiCoachClient
         _logger = logger;
     }
 
-    public async Task<int?> LookupUserAsync(string phone, CancellationToken cancellationToken)
+    public async Task<LookupOutcome> LookupUserAsync(string phone, CancellationToken cancellationToken)
     {
         var token = await GetTokenAsync(cancellationToken);
         var client = _factory.CreateClient(HttpClientName);
@@ -60,12 +65,13 @@ public sealed class AiCoachClient : IAiCoachClient
         using var response = await client.SendAsync(request, cancellationToken);
         if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
         {
-            return null;
+            return new LookupOutcome(UserId: null, Known: false, Allowed: false);
         }
 
         response.EnsureSuccessStatusCode();
         var body = await response.Content.ReadFromJsonAsync<ResultEnvelope<UserLookupData>>(Json(), cancellationToken);
-        return body?.Data?.UserId ?? throw new InvalidOperationException("Lookup sem userId na resposta.");
+        var data = body?.Data ?? throw new InvalidOperationException("Lookup sem userId na resposta.");
+        return new LookupOutcome(data.UserId, Known: true, Allowed: data.IsAllowed);
     }
 
     public async Task<int> CreateLeadAsync(string phone, string? name, CancellationToken cancellationToken)
@@ -175,7 +181,7 @@ public sealed class AiCoachClient : IAiCoachClient
     }
 
     private sealed record ResultEnvelope<T>(bool Success, T Data);
-    private sealed record UserLookupData(int UserId);
+    private sealed record UserLookupData(int UserId, bool IsAllowed);
     private sealed record LeadData(int LeadId, bool Created);
     private sealed record AgentMessageData(string AgentMessage);
     private sealed record AuthData(string AccessToken, string Email, string Name);

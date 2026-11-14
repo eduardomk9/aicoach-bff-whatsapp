@@ -14,10 +14,9 @@ namespace AiCoachBff.Tests;
 /// </summary>
 public sealed class WebhookServiceSimulateTests
 {
-    /// <summary>Allowlist de testes: o número dos fluxos "conhecido" está nela (o dono).
-    /// Sem allowlist, o default é NENHUM cliente pela demo — os fluxos abaixo testam o
-    /// caminho do coach, não o bloqueio.</summary>
-    private static DemoOptions Dono() => new() { AllowedPhones = ["5541999998888"] };
+    /// <summary>Trava do link da demo (?k=). O acesso EM SI mora no BANCO
+    /// (Users.IsAllowed, ddl-004) — o gate da demo usa o flag do lookup.</summary>
+    private static DemoOptions Chave() => new() { AccessKey = "k-demo" };
 
     private static WebhookService Build(
         Mock<IAiCoachClient>? aiCoach = null,
@@ -44,13 +43,13 @@ public sealed class WebhookServiceSimulateTests
         new(From: from, Id: id, Type: "text", Text: new InboundText(body));
 
     [Fact]
-    public async Task Simulate_UsuarioConhecido_ColetaTextoDoCoach_NuncaChamaMeta()
+    public async Task Simulate_UsuarioConhecidoPermitido_ColetaTextoDoCoach_NuncaChamaMeta()
     {
         var ai = new Mock<IAiCoachClient>();
-        ai.Setup(c => c.LookupUserAsync("5541999998888", It.IsAny<CancellationToken>())).ReturnsAsync(123462);
+        ai.Setup(c => c.LookupUserAsync("5541999998888", It.IsAny<CancellationToken>())).ReturnsAsync(new AiCoachBff.Api.Services.LookupOutcome(123462, true, true));
         ai.Setup(c => c.SendMessageAsync(123462, "oi", It.IsAny<CancellationToken>())).ReturnsAsync("Bom te ver! Qual foi o treino hoje?");
         var meta = new Mock<IMetaClient>();
-        var service = Build(aiCoach: ai, meta: meta, demo: Dono());
+        var service = Build(aiCoach: ai, meta: meta, demo: Chave());
 
         var replies = await service.SimulateAsync(Texto(), null, CancellationToken.None);
 
@@ -60,14 +59,14 @@ public sealed class WebhookServiceSimulateTests
     }
 
     [Fact]
-    public async Task Simulate_ConhecidoForaDaAllowlist_RecusaSemTocarSessao()
+    public async Task Simulate_ConhecidoSemIsAllowed_RecusaAntesDaEsteira()
     {
-        // Sequestro de sessão (review R20): com a chave da demo em mãos, alguém digitava
-        // o número REAL de um cliente → lookup devolvia o userId e o turno rodava NA
-        // sessão dele (corpus poluído, PDF pessoal na resposta). Default seguro: allowlist
-        // vazia = NENHUM cliente pela demo — coach e lead NEM são chamados.
+        // Sequestro de sessão (review R20, hoje com o estado no banco): com a chave da
+        // demo em mãos, alguém digitava o número REAL de um cliente sem IsAllowed → o
+        // gate recusa ANTES da esteira (coach e lead NEM são chamados - Users.IsAllowed
+        // é estado no banco, ddl-004; o dono libera via ativa-aluno.ps1).
         var ai = new Mock<IAiCoachClient>();
-        ai.Setup(c => c.LookupUserAsync("5541999998888", It.IsAny<CancellationToken>())).ReturnsAsync(123462);
+        ai.Setup(c => c.LookupUserAsync("5541999998888", It.IsAny<CancellationToken>())).ReturnsAsync(new AiCoachBff.Api.Services.LookupOutcome(123462, true, false));
         var meta = new Mock<IMetaClient>();
         var service = Build(aiCoach: ai, meta: meta);
 
@@ -103,7 +102,7 @@ public sealed class WebhookServiceSimulateTests
     public async Task Simulate_Desconhecido_OnboardingComNome_NuncaChamaIA()
     {
         var ai = new Mock<IAiCoachClient>();
-        ai.Setup(c => c.LookupUserAsync("5541999998888", It.IsAny<CancellationToken>())).ReturnsAsync((int?)null);
+        ai.Setup(c => c.LookupUserAsync("5541999998888", It.IsAny<CancellationToken>())).ReturnsAsync(new AiCoachBff.Api.Services.LookupOutcome(null, false, false));
         ai.Setup(c => c.CreateLeadAsync("5541999998888", "Eduardo", It.IsAny<CancellationToken>())).ReturnsAsync(7);
         var meta = new Mock<IMetaClient>();
         var service = Build(aiCoach: ai, meta: meta);
@@ -121,13 +120,13 @@ public sealed class WebhookServiceSimulateTests
     {
         var bytes = new byte[] { 1, 2, 3 };
         var ai = new Mock<IAiCoachClient>();
-        ai.Setup(c => c.LookupUserAsync("5541999998888", It.IsAny<CancellationToken>())).ReturnsAsync(123462);
+        ai.Setup(c => c.LookupUserAsync("5541999998888", It.IsAny<CancellationToken>())).ReturnsAsync(new AiCoachBff.Api.Services.LookupOutcome(123462, true, true));
         ai.Setup(c => c.SendMessageAsync(123462, "manda o pdf", It.IsAny<CancellationToken>()))
             .ReturnsAsync("PDF do cronograma pronto: /chat/media/media-f836 (válido por 24h).");
         ai.Setup(c => c.DownloadMediaAsync("media-f836", It.IsAny<CancellationToken>()))
             .ReturnsAsync(new MediaDownload(bytes, "application/pdf", "Cronograma.pdf"));
         var meta = new Mock<IMetaClient>();
-        var service = Build(aiCoach: ai, meta: meta, demo: Dono());
+        var service = Build(aiCoach: ai, meta: meta, demo: Chave());
 
         var replies = await service.SimulateAsync(Texto("manda o pdf"), null, CancellationToken.None);
 
@@ -145,7 +144,7 @@ public sealed class WebhookServiceSimulateTests
     public async Task Simulate_DoisObjectLinks_OrdemIgualAoWhatsApp_CaptionSoNoPrimeiro()
     {
         var ai = new Mock<IAiCoachClient>();
-        ai.Setup(c => c.LookupUserAsync("5541999998888", It.IsAny<CancellationToken>())).ReturnsAsync(123462);
+        ai.Setup(c => c.LookupUserAsync("5541999998888", It.IsAny<CancellationToken>())).ReturnsAsync(new AiCoachBff.Api.Services.LookupOutcome(123462, true, true));
         ai.Setup(c => c.SendMessageAsync(123462, It.IsAny<string>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync("PDF do cronograma pronto: /chat/media/media-aaa (válido por 24h).\n\nRelatório de outubro pronto: /chat/media/media-bbb (válido por 24h).");
         ai.Setup(c => c.DownloadMediaAsync("media-aaa", It.IsAny<CancellationToken>()))
@@ -153,7 +152,7 @@ public sealed class WebhookServiceSimulateTests
         ai.Setup(c => c.DownloadMediaAsync("media-bbb", It.IsAny<CancellationToken>()))
             .ReturnsAsync(new MediaDownload(new byte[] { 2 }, "application/pdf", "Relatorio.pdf"));
         var meta = new Mock<IMetaClient>();
-        var service = Build(aiCoach: ai, meta: meta, demo: Dono());
+        var service = Build(aiCoach: ai, meta: meta, demo: Chave());
 
         var replies = await service.SimulateAsync(Texto(), null, CancellationToken.None);
 
@@ -168,13 +167,13 @@ public sealed class WebhookServiceSimulateTests
     public async Task Simulate_MidiaQueFalha_DegradaParaTextoNoCollector()
     {
         var ai = new Mock<IAiCoachClient>();
-        ai.Setup(c => c.LookupUserAsync("5541999998888", It.IsAny<CancellationToken>())).ReturnsAsync(123462);
+        ai.Setup(c => c.LookupUserAsync("5541999998888", It.IsAny<CancellationToken>())).ReturnsAsync(new AiCoachBff.Api.Services.LookupOutcome(123462, true, true));
         ai.Setup(c => c.SendMessageAsync(123462, It.IsAny<string>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync("PDF do cronograma pronto: /chat/media/media-expirou (válido por 24h).");
         ai.Setup(c => c.DownloadMediaAsync("media-expirou", It.IsAny<CancellationToken>()))
             .ThrowsAsync(new HttpRequestException("404 expirado"));
         var meta = new Mock<IMetaClient>();
-        var service = Build(aiCoach: ai, meta: meta, demo: Dono());
+        var service = Build(aiCoach: ai, meta: meta, demo: Chave());
 
         var replies = await service.SimulateAsync(Texto(), null, CancellationToken.None);
 
@@ -187,11 +186,11 @@ public sealed class WebhookServiceSimulateTests
     public async Task Simulate_MesmaEsteira_FalhaDoCoach_ViraFallbackColetado()
     {
         var ai = new Mock<IAiCoachClient>();
-        ai.Setup(c => c.LookupUserAsync("5541999998888", It.IsAny<CancellationToken>())).ReturnsAsync(123462);
+        ai.Setup(c => c.LookupUserAsync("5541999998888", It.IsAny<CancellationToken>())).ReturnsAsync(new AiCoachBff.Api.Services.LookupOutcome(123462, true, true));
         ai.Setup(c => c.SendMessageAsync(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<CancellationToken>()))
             .ThrowsAsync(new HttpRequestException("503"));
         var meta = new Mock<IMetaClient>();
-        var service = Build(aiCoach: ai, meta: meta, demo: Dono());
+        var service = Build(aiCoach: ai, meta: meta, demo: Chave());
 
         var replies = await service.SimulateAsync(Texto(), null, CancellationToken.None);
 
@@ -207,7 +206,7 @@ public sealed class WebhookServiceSimulateTests
         // (o dedupe que importa é o do webhook, e o cache dele não pode ser gasto com
         // id sintético — prova de evicção no teste seguinte).
         var ai = new Mock<IAiCoachClient>();
-        ai.Setup(c => c.LookupUserAsync(It.IsAny<string>(), It.IsAny<CancellationToken>())).ReturnsAsync((int?)null);
+        ai.Setup(c => c.LookupUserAsync(It.IsAny<string>(), It.IsAny<CancellationToken>())).ReturnsAsync(new AiCoachBff.Api.Services.LookupOutcome(null, false, false));
         ai.Setup(c => c.CreateLeadAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<CancellationToken>())).ReturnsAsync(7);
         var meta = new Mock<IMetaClient>();
         var service = Build(aiCoach: ai, meta: meta);
@@ -226,9 +225,9 @@ public sealed class WebhookServiceSimulateTests
         // cache LRU do webhook (bug da review R20), o id REAL w.1 — o mais velho — seria
         // evictado e a reentrega da Meta geraria resposta DUPLA pro cliente.
         var ai = new Mock<IAiCoachClient>();
-        ai.Setup(c => c.LookupUserAsync("5541888887777", It.IsAny<CancellationToken>())).ReturnsAsync(7);
+        ai.Setup(c => c.LookupUserAsync("5541888887777", It.IsAny<CancellationToken>())).ReturnsAsync(new AiCoachBff.Api.Services.LookupOutcome(7, true, true));
         ai.Setup(c => c.SendMessageAsync(7, "oi", It.IsAny<CancellationToken>())).ReturnsAsync("coach responde");
-        ai.Setup(c => c.LookupUserAsync("5541999998888", It.IsAny<CancellationToken>())).ReturnsAsync((int?)null);
+        ai.Setup(c => c.LookupUserAsync("5541999998888", It.IsAny<CancellationToken>())).ReturnsAsync(new AiCoachBff.Api.Services.LookupOutcome(null, false, false));
         ai.Setup(c => c.CreateLeadAsync("5541999998888", It.IsAny<string>(), It.IsAny<CancellationToken>())).ReturnsAsync(9);
         var meta = new Mock<IMetaClient>();
         var service = Build(aiCoach: ai, meta: meta, dedupeCap: 10);
@@ -249,7 +248,7 @@ public sealed class WebhookServiceSimulateTests
     public async Task Simulate_DoismoMesmoUsuario_Paralelo_AmbosRespondem_SemMisturar()
     {
         var ai = new Mock<IAiCoachClient>();
-        ai.Setup(c => c.LookupUserAsync(It.IsAny<string>(), It.IsAny<CancellationToken>())).ReturnsAsync(10);
+        ai.Setup(c => c.LookupUserAsync(It.IsAny<string>(), It.IsAny<CancellationToken>())).ReturnsAsync(new AiCoachBff.Api.Services.LookupOutcome(10, true, true));
         ai.Setup(c => c.SendMessageAsync(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<CancellationToken>()))
             .Returns(async (int _, string texto, CancellationToken _) =>
             {
@@ -257,7 +256,7 @@ public sealed class WebhookServiceSimulateTests
                 return $"resp:{texto}";
             });
         var meta = new Mock<IMetaClient>();
-        var service = Build(aiCoach: ai, meta: meta, demo: Dono());
+        var service = Build(aiCoach: ai, meta: meta, demo: Chave());
 
         var t1 = service.SimulateAsync(Texto("treino de hj", id: "demo.a"), null, CancellationToken.None);
         var t2 = service.SimulateAsync(Texto("e a dieta?", id: "demo.b"), null, CancellationToken.None);

@@ -39,22 +39,15 @@ public sealed class AiCoachOptions
 
 /// <summary>Canal demo (R20 — front provisório mobile-first /demo). AccessKey é a trava
 /// do link público (?k=...); vazia em Production = endpoint INEXISTENTE (fail-closed).
-/// Não é segredo caro — não abre API nem Meta, só o canal de testes.</summary>
+/// Não é segredo caro — não abre API nem Meta, só o canal de testes.
+/// R20 ADMIN: quem já é usuário conversa conforme Users.IsAllowed (estado no banco,
+/// ddl-004) — a lista de env de allowlist MORREU (over-engineering, decisão do dono).</summary>
 public sealed class DemoOptions
 {
     public const string Section = "Demo";
 
     /// <summary>Chave que o visitante carrega no link (header X-Demo-Key).</summary>
     public string AccessKey { get; init; } = string.Empty;
-
-    /// <summary>Números (formato canônico do BFF, digits-only com DDI) autorizados a
-    /// falar com o COACH pela demo. Número NOVO sempre passa (lead/onboarding é o
-    /// coração da demo); número JÁ CADASTRADO só passa se estiver aqui — sem essa
-    /// trava, quem tivesse a chave digitava o número real de um cliente e conversava
-    /// NA SESSÃO dele (corpus poluído, PDF pessoal vazando — review R20).
-    /// Vazio = NENHUM cliente pela demo (default seguro; o dono lista o próprio).
-    /// Na nuvem: secret/env Demo__AllowedPhones__0=55...</summary>
-    public string[] AllowedPhones { get; init; } = [];
 }
 
 /// <summary>Comportamento do BFF (espera do LLM, dedupe e mensagens de resposta fixa).</summary>

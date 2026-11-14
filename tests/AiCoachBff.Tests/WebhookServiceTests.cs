@@ -41,7 +41,7 @@ public sealed class WebhookServiceTests
     {
         var ai = new Mock<IAiCoachClient>();
         ai.Setup(c => c.LookupUserAsync("5541999998888", It.IsAny<CancellationToken>()))
-            .ReturnsAsync(123462);
+            .ReturnsAsync(new AiCoachBff.Api.Services.LookupOutcome(123462, true, true));
         ai.Setup(c => c.SendMessageAsync(123462, "oi", It.IsAny<CancellationToken>()))
             .ReturnsAsync("Bom te ver! Qual foi o treino hoje?");
 
@@ -58,7 +58,7 @@ public sealed class WebhookServiceTests
     {
         var ai = new Mock<IAiCoachClient>();
         ai.Setup(c => c.LookupUserAsync("5541999998888", It.IsAny<CancellationToken>()))
-            .ReturnsAsync((int?)null);
+            .ReturnsAsync(new AiCoachBff.Api.Services.LookupOutcome(null, false, false));
         ai.Setup(c => c.CreateLeadAsync("5541999998888", "Eduardo", It.IsAny<CancellationToken>()))
             .ReturnsAsync(7);
 
@@ -76,7 +76,7 @@ public sealed class WebhookServiceTests
     public async Task CoachDevolvePdf_BaixaEEntregaDocumento_CaptionSemOLink()
     {
         var ai = new Mock<IAiCoachClient>();
-        ai.Setup(c => c.LookupUserAsync("5541999998888", It.IsAny<CancellationToken>())).ReturnsAsync(123462);
+        ai.Setup(c => c.LookupUserAsync("5541999998888", It.IsAny<CancellationToken>())).ReturnsAsync(new AiCoachBff.Api.Services.LookupOutcome(123462, true, true));
         ai.Setup(c => c.SendMessageAsync(123462, "manda o pdf", It.IsAny<CancellationToken>()))
             .ReturnsAsync("PDF do cronograma pronto: /chat/media/media-f836 (válido por 24h).");
         ai.Setup(c => c.DownloadMediaAsync("media-f836", It.IsAny<CancellationToken>()))
@@ -98,7 +98,7 @@ public sealed class WebhookServiceTests
     public async Task CoachDevolveFoto_EntregaImagemNativa()
     {
         var ai = new Mock<IAiCoachClient>();
-        ai.Setup(c => c.LookupUserAsync("5541999998888", It.IsAny<CancellationToken>())).ReturnsAsync(123462);
+        ai.Setup(c => c.LookupUserAsync("5541999998888", It.IsAny<CancellationToken>())).ReturnsAsync(new AiCoachBff.Api.Services.LookupOutcome(123462, true, true));
         ai.Setup(c => c.SendMessageAsync(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync("Foto registrada: /chat/media/media-foto-0001");
         ai.Setup(c => c.DownloadMediaAsync("media-foto-0001", It.IsAny<CancellationToken>()))
@@ -120,7 +120,7 @@ public sealed class WebhookServiceTests
     {
         var options = Default();
         var ai = new Mock<IAiCoachClient>();
-        ai.Setup(c => c.LookupUserAsync("5541999998888", It.IsAny<CancellationToken>())).ReturnsAsync(123462);
+        ai.Setup(c => c.LookupUserAsync("5541999998888", It.IsAny<CancellationToken>())).ReturnsAsync(new AiCoachBff.Api.Services.LookupOutcome(123462, true, true));
         ai.Setup(c => c.SendMessageAsync(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync("Segue: /chat/media/media-f836");
         ai.Setup(c => c.DownloadMediaAsync("media-f836", It.IsAny<CancellationToken>()))
@@ -154,7 +154,7 @@ public sealed class WebhookServiceTests
     public async Task ReentregaDedupe_ignora()
     {
         var ai = new Mock<IAiCoachClient>();
-        ai.Setup(c => c.LookupUserAsync(It.IsAny<string>(), It.IsAny<CancellationToken>())).ReturnsAsync(1);
+        ai.Setup(c => c.LookupUserAsync(It.IsAny<string>(), It.IsAny<CancellationToken>())).ReturnsAsync(new AiCoachBff.Api.Services.LookupOutcome(1, true, true));
         ai.Setup(c => c.SendMessageAsync(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync("ok");
         var meta = new Mock<IMetaClient>();
@@ -170,7 +170,7 @@ public sealed class WebhookServiceTests
     public async Task CoachFalha_RespondeFallback_SemPropagar()
     {
         var ai = new Mock<IAiCoachClient>();
-        ai.Setup(c => c.LookupUserAsync("5541999998888", It.IsAny<CancellationToken>())).ReturnsAsync(123462);
+        ai.Setup(c => c.LookupUserAsync("5541999998888", It.IsAny<CancellationToken>())).ReturnsAsync(new AiCoachBff.Api.Services.LookupOutcome(123462, true, true));
         ai.Setup(c => c.SendMessageAsync(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<CancellationToken>()))
             .ThrowsAsync(new HttpRequestException("503"));
 
@@ -205,7 +205,7 @@ public sealed class WebhookServiceTests
     public async Task MultiPedido_DoisLinks_DoisDocumentos_CaptionSoNoPrimeiro()
     {
         var ai = new Mock<IAiCoachClient>();
-        ai.Setup(c => c.LookupUserAsync("5541999998888", It.IsAny<CancellationToken>())).ReturnsAsync(123462);
+        ai.Setup(c => c.LookupUserAsync("5541999998888", It.IsAny<CancellationToken>())).ReturnsAsync(new AiCoachBff.Api.Services.LookupOutcome(123462, true, true));
         ai.Setup(c => c.SendMessageAsync(123462, It.IsAny<string>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync("PDF do cronograma pronto: /chat/media/media-aaa (válido por 24h).\n\nRelatório de outubro pronto: /chat/media/media-bbb (válido por 24h).");
         ai.Setup(c => c.DownloadMediaAsync("media-aaa", It.IsAny<CancellationToken>()))
@@ -235,7 +235,7 @@ public sealed class WebhookServiceTests
     public async Task EntregaMidiaFalha_DegradaParaTextoSemLink_FallbackGeralNunca()
     {
         var ai = new Mock<IAiCoachClient>();
-        ai.Setup(c => c.LookupUserAsync("5541999998888", It.IsAny<CancellationToken>())).ReturnsAsync(123462);
+        ai.Setup(c => c.LookupUserAsync("5541999998888", It.IsAny<CancellationToken>())).ReturnsAsync(new AiCoachBff.Api.Services.LookupOutcome(123462, true, true));
         ai.Setup(c => c.SendMessageAsync(123462, It.IsAny<string>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync("PDF do cronograma pronto: /chat/media/media-expirou (válido por 24h).");
         ai.Setup(c => c.DownloadMediaAsync("media-expirou", It.IsAny<CancellationToken>()))
@@ -256,7 +256,7 @@ public sealed class WebhookServiceTests
     public async Task EntregaMidiaFalha_ReplySoOLink_FraseHonestaDeArquivo()
     {
         var ai = new Mock<IAiCoachClient>();
-        ai.Setup(c => c.LookupUserAsync("5541999998888", It.IsAny<CancellationToken>())).ReturnsAsync(123462);
+        ai.Setup(c => c.LookupUserAsync("5541999998888", It.IsAny<CancellationToken>())).ReturnsAsync(new AiCoachBff.Api.Services.LookupOutcome(123462, true, true));
         ai.Setup(c => c.SendMessageAsync(123462, It.IsAny<string>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync("/chat/media/media-expirou");
         ai.Setup(c => c.DownloadMediaAsync("media-expirou", It.IsAny<CancellationToken>()))
@@ -277,7 +277,7 @@ public sealed class WebhookServiceTests
     public async Task ReplyLongaComLink_CaptionCapsA1024ComReticencias()
     {
         var ai = new Mock<IAiCoachClient>();
-        ai.Setup(c => c.LookupUserAsync("5541999998888", It.IsAny<CancellationToken>())).ReturnsAsync(123462);
+        ai.Setup(c => c.LookupUserAsync("5541999998888", It.IsAny<CancellationToken>())).ReturnsAsync(new AiCoachBff.Api.Services.LookupOutcome(123462, true, true));
         ai.Setup(c => c.SendMessageAsync(123462, It.IsAny<string>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(new string('x', 1300) + " /chat/media/media-f836 (válido por 24h).");
         ai.Setup(c => c.DownloadMediaAsync("media-f836", It.IsAny<CancellationToken>()))
@@ -305,7 +305,7 @@ public sealed class WebhookServiceTests
         var ativos = 0;
         var maximo = 0;
         var ai = new Mock<IAiCoachClient>();
-        ai.Setup(c => c.LookupUserAsync(It.IsAny<string>(), It.IsAny<CancellationToken>())).ReturnsAsync(10);
+        ai.Setup(c => c.LookupUserAsync(It.IsAny<string>(), It.IsAny<CancellationToken>())).ReturnsAsync(new AiCoachBff.Api.Services.LookupOutcome(10, true, true));
         ai.Setup(c => c.SendMessageAsync(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<CancellationToken>()))
             .Returns(async (int _, string _, CancellationToken _) =>
             {

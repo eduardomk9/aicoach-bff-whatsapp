@@ -83,7 +83,7 @@ public sealed class WebhookService(
     {
         var waId = PhoneNormalizer.Canonical(message.From);
 
-        if (await BloqueadoForaDaAllowlistAsync(waId, cancellationToken))
+        if (await BloqueadoSemAcessoAsync(waId, cancellationToken))
         {
             return [new Outbound.Text(bff.KnownUserDemoMessage)];
         }
@@ -102,22 +102,23 @@ public sealed class WebhookService(
         }
     }
 
-    /// <summary>Veredito de bloqueio da demo: conhecido FORA da allowlist = bloqueado
-    /// (o cliente real pertence ao WhatsApp oficial). Lookup falhou (API indisponível)
-    /// = deixa passar — o HandleCoreAsync transforma a falha na mensagem de fallback;
-    /// e uma falha de lookup NUNCA cria lead (a exceção impede o CreateLeadAsync), então
-    /// não há falso onboarding.</summary>
-    private async Task<bool> BloqueadoForaDaAllowlistAsync(string waId, CancellationToken cancellationToken)
+    /// <summary>Veredito de bloqueio da demo (R20 admin): conhecido SEM IsAllowed =
+    /// bloqueado (o cliente real pertence ao WhatsApp oficial); permitido conversa.
+    /// O flag mora no BANCO (Users.IsAllowed, ddl-004) — a lista de env morreu.
+    /// Lookup falhou (API indisponível) = deixa passar — o HandleCoreAsync transforma
+    /// a falha na mensagem de fallback; e uma falha de lookup NUNCA cria lead
+    /// (a exceção impede o CreateLeadAsync), então não há falso onboarding.</summary>
+    private async Task<bool> BloqueadoSemAcessoAsync(string waId, CancellationToken cancellationToken)
     {
         try
         {
-            var userId = await aiCoach.LookupUserAsync(waId, cancellationToken);
-            if (userId is null)
+            var lookup = await aiCoach.LookupUserAsync(waId, cancellationToken);
+            if (!lookup.Known)
             {
                 return false;
             }
 
-            return !demo.AllowedPhones.Contains(waId, StringComparer.Ordinal);
+            return !lookup.Allowed;
         }
         catch (OperationCanceledException)
         {
@@ -162,8 +163,8 @@ public sealed class WebhookService(
 
     private async Task ReplyFromCoachAsync(string waId, string text, string? profileName, IOutboundSink sink, CancellationToken cancellationToken)
     {
-        var userId = await aiCoach.LookupUserAsync(waId, cancellationToken);
-        if (userId is null)
+        var lookup = await aiCoach.LookupUserAsync(waId, cancellationToken);
+        if (!lookup.Known)
         {
             // Gate de leads (R20 F3): cadastro provisório pendente de pagamento;
             // onboarding sem IA — o coach não conversa com quem não é usuário.
@@ -173,7 +174,7 @@ public sealed class WebhookService(
             return;
         }
 
-        var reply = await aiCoach.SendMessageAsync(userId.Value, text, cancellationToken);
+        var reply = await aiCoach.SendMessageAsync(lookup.UserId!.Value, text, cancellationToken);
 
         // Mídia nativa: o coach entrega PDF/foto com o link RELATIVO /chat/media/{id} —
         // baixa da API e entrega documento no WhatsApp (docs\whatsapp-pdf.md da API).
