@@ -164,7 +164,8 @@ public sealed class AiCoachClient : IAiCoachClient
             {
                 var corpo = await response.Content.ReadAsStringAsync(cancellationToken);
                 var server = response.Headers.Server.Count > 0 ? response.Headers.Server.ToString() : "-";
-                var allow = response.Headers.Contains("Allow") ? response.Headers.Allow.ToString() : "-";
+                var allowOk = response.Headers.TryGetValues("Allow", out var allowValues);
+                var allow = allowOk ? string.Join(',', allowValues) : "-";
                 throw new HttpRequestException(
                     $"login={response.StatusCode} allow={allow} body={corpo[..Math.Min(160, corpo.Length)]} server={server} url={response.RequestMessage?.RequestUri} metodo={response.RequestMessage?.Method}");
             }
